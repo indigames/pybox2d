@@ -61,7 +61,7 @@ class Soup (Framework):
         body = self.world.CreateBody(bd)
         shape = b2CircleShape()
         shape.pos.Set(0, 0.5)
-        shape.m_radius = 0.1
+        shape.radius = 0.1
         body.CreateFixture(b2FixtureDef(shape=shape, density=0.1))
         self.particleSystem.DestroyParticlesInShape(shape, body.transform)
 
@@ -87,7 +87,7 @@ class Soup (Framework):
         body = self.world.CreateBody(bd)
         shape = b2EdgeShape()
         shape.vertices = [b2Vec2(0, 2), b2Vec2(0.1, 2.1)]
-        body.CreateFixture(b2FixtureDef(shape=shape, density=0.1))
+        body.CreateFixture(b2FixtureDef(shape=shape, density=1))
         massData = b2MassData()
         massData.mass = 0.1
         massData.center = 0.5 * (shape.vertex1 + shape.vertex2)
@@ -99,7 +99,7 @@ class Soup (Framework):
         body = self.world.CreateBody(bd)
         shape = b2EdgeShape()
         shape.vertices = [b2Vec2(0.3, 2.0), b2Vec2(0.4, 2.1)]
-        body.CreateFixture(b2FixtureDef(shape=shape, density=0.1))
+        body.CreateFixture(b2FixtureDef(shape=shape, density=1))
         massData = b2MassData()
         massData.mass = 0.1
         massData.center = 0.5 * (shape.vertex1 + shape.vertex2)
@@ -111,7 +111,7 @@ class Soup (Framework):
         body = self.world.CreateBody(bd)
         shape = b2EdgeShape()
         shape.vertices = [b2Vec2(-0.3, 2.1), b2Vec2(-0.2, 2.0)]
-        body.CreateFixture(b2FixtureDef(shape=shape, density=0.1))
+        body.CreateFixture(b2FixtureDef(shape=shape, density=1))
         massData = b2MassData()
         massData.mass = 0.1
         massData.center = 0.5 * (shape.vertex1 + shape.vertex2)
