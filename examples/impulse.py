@@ -5,18 +5,6 @@ from .framework import (Framework, Keys, main)
 from Box2D import (b2CircleShape, b2FixtureDef, b2PolygonShape, b2Random,
                    b2Vec2, b2_epsilon, b2BodyDef, b2ChainShape, b2ParticleGroupDef, b2ParticleColor)
 
-k_ParticleColors = (
-    b2ParticleColor(0xff, 0x00, 0x00, 0xff),  # red
-    b2ParticleColor(0x00, 0xff, 0x00, 0xff),  # green
-    b2ParticleColor(0x00, 0x00, 0xff, 0xff),  # blue
-    b2ParticleColor(0xff, 0x8c, 0x00, 0xff),  # orange
-    b2ParticleColor(0x00, 0xce, 0xd1, 0xff),  # turquoise
-    b2ParticleColor(0xff, 0x00, 0xff, 0xff),  # magenta
-    b2ParticleColor(0xff, 0xd7, 0x00, 0xff),  # gold
-    b2ParticleColor(0x00, 0xff, 0xff, 0xff),  # cyan
-)
-k_ParticleColorsCount = 8
-
 
 class Impulse (Framework):
     name = "Impulse Test"
@@ -36,10 +24,10 @@ class Impulse (Framework):
         ground = self.world.CreateBody(bd)
 
         box = [b2Vec2(self.kBoxLeft, self.kBoxBottom),
-            b2Vec2(self.kBoxRight, self.kBoxBottom),
-            b2Vec2(self.kBoxRight, self.kBoxTop),
-            b2Vec2(self.kBoxLeft, self.kBoxTop)]
-        
+               b2Vec2(self.kBoxRight, self.kBoxBottom),
+               b2Vec2(self.kBoxRight, self.kBoxTop),
+               b2Vec2(self.kBoxLeft, self.kBoxTop)]
+
         shape = b2ChainShape()
         shape.CreateLoop(box)
 
@@ -57,21 +45,7 @@ class Impulse (Framework):
         pd.color = b2ParticleColor(255, 0, 0, 255)
         group = self.particleSystem.CreateParticleGroup(pd)
         # if pd.flags & b2_colorMixingParticle:
-            # self.ColorParticleGroup(group, 0)
-
-    def ColorParticleGroup(self, group, particlesPerColor):
-        colorBuffer = self.particleSystem.GetColorBuffer()
-        particleCount = group.GetParticleCount()
-        groupStart = group.GetBufferIndex()
-        groupEnd = particleCount + groupStart
-        colorCount = k_ParticleColorsCount
-        if particlesPerColor == 0:
-            particlesPerColor = particleCount / colorCount
-            if particlesPerColor == 0:
-                particlesPerColor = 1
-
-        for i in range(groupStart, groupEnd):
-            colorBuffer[i] = k_ParticleColors[round(i / particlesPerColor)]
+        # self.ColorParticleGroup(group, 0)
 
     def ApplyImpulseOrForce(self, direction):
         particleSystem = self.world.GetParticleSystemList()

@@ -44,7 +44,7 @@ class Soup (Framework):
             b2Vec2(2, 2)]
         self.m_ground.CreateFixture(b2FixtureDef(shape=shape, density=0.0))
 
-        self.particleSystem.SetRadius(0.035)
+        self.particleSystem.SetRadius(0.025)
 
         shape = b2PolygonShape()
         shape.SetAsBox(2, 1, b2Vec2(0, 1), 0)
@@ -54,7 +54,7 @@ class Soup (Framework):
         # pd.flags = TestMain::GetParticleParameterValue();
         group = self.particleSystem.CreateParticleGroup(pd)
         # if (pd.flags & b2_colorMixingParticle):
-        #     ColorParticleGroup(group, 0)
+        # self.ColorParticleGroup(group, 0)
 
         bd = b2BodyDef()
         bd.type = Box2D.b2_dynamicBody
