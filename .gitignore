@@ -4,3 +4,10 @@ dist/*
 *.swo
 *.swp
 *.so
+library/Box2D.egg-info/dependency_links.txt
+library/Box2D.egg-info/PKG-INFO
+library/Box2D/_Box2D.cp37-win32.pyd
+library/Box2D.egg-info/top_level.txt
+library/Box2D.egg-info/SOURCES.txt
+Box2D/Box2D_wrap.cpp
+Box2D/Box2D_wrap.h
