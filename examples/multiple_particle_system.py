@@ -182,6 +182,8 @@ class MultipleParticleSystems (Framework):
 
         self.m_emitters = [RadialEmitter(), RadialEmitter()]
 
+        self.setZoom(50.0)
+
         # Initialize the emitters.
         for i in range(0, 2):
             mirrorAlongY = 1.0

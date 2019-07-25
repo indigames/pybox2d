@@ -50,7 +50,7 @@ class Soup (Framework):
         shape.SetAsBox(2, 1, b2Vec2(0, 1), 0)
         pd = b2ParticleGroupDef()
         pd.shape = shape
-        pd.color = b2ParticleColor(0, 0, 255, 128)
+        pd.color = b2ParticleColor(0, 0, 255, 255)
         # pd.flags = TestMain::GetParticleParameterValue();
         group = self.particleSystem.CreateParticleGroup(pd)
         # if (pd.flags & b2_colorMixingParticle):
@@ -117,6 +117,8 @@ class Soup (Framework):
         massData.center = 0.5 * (shape.vertex1 + shape.vertex2)
         massData.I = 0.0
         body.massData = massData
+
+        self.setZoom(50.0)
 
 
 if __name__ == "__main__":

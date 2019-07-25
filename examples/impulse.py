@@ -15,10 +15,10 @@ class Impulse (Framework):
     def __init__(self):
         super(Impulse, self).__init__()
 
-        self.kBoxLeft = -4
-        self.kBoxRight = 4
+        self.kBoxLeft = -2
+        self.kBoxRight = 2
         self.kBoxBottom = 0
-        self.kBoxTop = 8
+        self.kBoxTop = 4
 
         bd = b2BodyDef()
         ground = self.world.CreateBody(bd)
@@ -33,11 +33,11 @@ class Impulse (Framework):
 
         ground.CreateFixture(b2FixtureDef(shape=shape, density=0.0))
 
-        self.particleSystem.SetRadius(0.05)
+        self.particleSystem.SetRadius(0.025)
         self.particleSystem.SetDamping(0.2)
 
         shape = b2PolygonShape()
-        shape.SetAsBox(2, 2, b2Vec2(0, 2.01), 0)
+        shape.SetAsBox(0.8, 1.0, b2Vec2(0, 1.01), 0)
         pd = b2ParticleGroupDef()
         pd.flags = 1 << 5
         # pd.flags = TestMain::GetParticleParameterValue();
@@ -46,6 +46,7 @@ class Impulse (Framework):
         group = self.particleSystem.CreateParticleGroup(pd)
         # if pd.flags & b2_colorMixingParticle:
         # self.ColorParticleGroup(group, 0)
+        self.setZoom(50.0)
 
     def ApplyImpulseOrForce(self, direction):
         particleSystem = self.world.GetParticleSystemList()

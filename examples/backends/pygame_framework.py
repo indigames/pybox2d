@@ -168,10 +168,10 @@ class PygameDraw(b2DrawExtended):
             radius = 1
         else:
             radius = int(radius)
-
+                
         for i in range(0, len(centers)):
             color = b2ParticleColor(colors[i][0], colors[i][1], colors[i][2], colors[i][3])           
-            pygame.draw.circle(self.surface, color.GetColor().bytes, centers[i] , radius, 1)
+            pygame.draw.circle(self.surface, color.GetColor().bytes, centers[i] , radius)
 
     def DrawPolygon(self, vertices, color):
         """
