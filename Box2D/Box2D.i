@@ -182,6 +182,12 @@
     /* Extending the debug draw class. */
     %include "Box2D/Box2D_debugdraw.i"
 
+    /* Extending the particle module. */
+    %include "Box2D/Box2D_particle.i"
+
+    /* Extending the rope module. */
+    %include "Box2D/Box2D_rope.i"
+
     /* Include everything from the C++ library now */
     %include "Box2D/Box2D.h"
 

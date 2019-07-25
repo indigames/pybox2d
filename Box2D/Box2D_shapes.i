@@ -216,6 +216,12 @@ public:
         self.__GetChildEdge(edge, index)
         return edge
 
+    def CreateLoop(self, values):
+        self.__set_vertices(values)
+    
+    def CreateChain(self, values):
+        self.__set_vertices(values, False)
+
     @property
     def edges(self):
         return [self.getChildEdge(i) for i in range(self.childCount)]

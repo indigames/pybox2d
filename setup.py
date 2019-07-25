@@ -93,6 +93,8 @@ source_paths = [
     os.path.join(source_dir, 'Common'),
     os.path.join(source_dir, 'Collision'),
     os.path.join(source_dir, 'Collision', 'Shapes'),
+    os.path.join(source_dir, 'Particle'), # @thai.phi: LiquidFun
+    os.path.join(source_dir, 'Rope'), # @thai.phi: LiquidFun
     ]
 
 # glob all of the paths and then flatten the list into one
@@ -121,6 +123,9 @@ if sys.platform in ('win32', 'win64'):
     extra_args=['-I.']
 else:
     extra_args=['-I.', '-Wno-unused']
+
+# @thai.phi: required for LiquidFun
+extra_args.append("-DLIQUIDFUN_EXTERNAL_LANGUAGE_API=1")
 
 pybox2d_extension = \
     Extension('Box2D._Box2D', box2d_source_files, extra_compile_args=extra_args, language='c++')

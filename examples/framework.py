@@ -28,6 +28,7 @@ from Box2D import (b2ContactListener, b2DestructionListener, b2DrawExtended)
 from Box2D import (b2Fixture, b2FixtureDef, b2Joint)
 from Box2D import (b2GetPointStates, b2QueryCallback, b2Random)
 from Box2D import (b2_addState, b2_dynamicBody, b2_epsilon, b2_persistState)
+from Box2D import (b2ParticleDef, b2ParticleSystem, b2ParticleSystemDef)
 
 from .settings import fwSettings
 
@@ -116,6 +117,9 @@ class FrameworkBase(b2ContactListener):
         self.using_contacts = False
         self.stepCount = 0
 
+        # liquid fun with particle system
+        self.particleSystem = None
+
         # Box2D-callbacks
         self.destructionListener = None
         self.renderer = None
@@ -132,6 +136,14 @@ class FrameworkBase(b2ContactListener):
         self.world.destructionListener = self.destructionListener
         self.world.contactListener = self
         self.t_steps, self.t_draws = [], []
+
+        # Create Particle System
+        particleSystemDef = b2ParticleSystemDef()
+        self.particleSystem = self.world.CreateParticleSystem(particleSystemDef)
+
+        # Particle system initialization
+        self.particleSystem.SetGravityScale(0.4)
+        self.particleSystem.SetDensity(1.2)
 
     def __del__(self):
         pass
@@ -173,6 +185,7 @@ class FrameworkBase(b2ContactListener):
                                   drawAABBs=settings.drawAABBs,
                                   drawPairs=settings.drawPairs,
                                   drawCOMs=settings.drawCOMs,
+                                  drawParticles=settings.drawParticles,
                                   convertVertices=is_extended,
                                   )
 
@@ -180,6 +193,7 @@ class FrameworkBase(b2ContactListener):
         self.world.warmStarting = settings.enableWarmStarting
         self.world.continuousPhysics = settings.enableContinuous
         self.world.subStepping = settings.enableSubStepping
+        self.particleSystem.SetStrictContactCheck(settings.strictContacts)
 
         # Reset the collision points
         self.points = []
@@ -523,7 +537,6 @@ if __name__ == '__main__':
 # framework, then your file should be 'backends/foobar_framework.py' and you
 # should have a class 'FoobarFramework' that subclasses FrameworkBase. Ensure
 # proper capitalization for portability.
-from . import backends
 
 try:
     framework_name = '%s_framework' % (fwSettings.backend.lower())

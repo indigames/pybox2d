@@ -28,6 +28,7 @@ public:
             ['drawPairs', e_pairBit ],
             ['drawCOMs', e_centerOfMassBit ],
             ['convertVertices', e_convertVertices ],
+            ['drawParticles', e_particleBit],
         ]
         def _SetFlags(self, value):
             flags = 0
@@ -84,6 +85,15 @@ public:
     $input = this->to_screen((b2Vec2&)$1_name);
 }
 
+%typemap(directorin) (const b2ParticleColor* conv_colors, int32 colorCount) {
+    $input = this->__ConvertParCol($1_name, $2_name);
+}
+
+%typemap(directorin) (const b2Vec2 *conv_centers, int32 centerCount) {
+    $input = this->__ConvertParCenter($1_name, $2_name);
+}
+
+
 %include "Box2D/Common/b2Draw.h"
 %inline {
     class b2DrawExtended : public b2Draw {
@@ -129,6 +139,55 @@ public:
             return ret;
         }
 
+        PyObject* __ConvertParCol(const b2ParticleColor* cols, int32 count) {
+            PyObject* ret=PyTuple_New(count);
+            PyObject* color;
+            b2ParticleColor c;            
+            for (int i=0; i < count; i++) {
+                color = PyTuple_New(4);
+                c = *(cols + i);
+                PyTuple_SetItem(color, 0, SWIG_From_int(c.r));
+                PyTuple_SetItem(color, 1, SWIG_From_int(c.g));
+                PyTuple_SetItem(color, 2, SWIG_From_int(c.b));
+                PyTuple_SetItem(color, 3, SWIG_From_int(c.a));
+                PyTuple_SetItem(ret, i, color);
+            }
+            return ret;
+        }
+
+        PyObject* __ConvertParCenter(const b2Vec2 *centers, int32 count) {
+            PyObject* ret=PyTuple_New(count);
+            PyObject* center;
+            b2Vec2 c;            
+            if (GetFlags() & e_convertVertices) {                
+                long x, y;
+                for (int i=0; i < count; i++) {
+                    center = PyTuple_New(2);
+                    c = *(centers + i);
+
+                    x=(long)((c.x * zoom) - offset.x);
+                    if (flipX) { x = (long)screenSize.x - x; }
+
+                    y=(long)((c.y * zoom) - offset.y);
+                    if (flipY) { y = (long)screenSize.y - y; }
+
+                    PyTuple_SetItem(center, 0, SWIG_From_long(x));
+                    PyTuple_SetItem(center, 1, SWIG_From_long(y));
+
+                    PyTuple_SetItem(ret, i, center);
+                }
+            } else {
+                for (int i=0; i < count; i++) {
+                    center = PyTuple_New(2);
+                    c = *(centers + i);
+                    PyTuple_SetItem(center, 0, SWIG_From_long(c.x));
+                    PyTuple_SetItem(center, 1, SWIG_From_long(c.y));
+                    PyTuple_SetItem(ret, i, center);
+                }
+            }
+            return ret;
+        }
+
         PyObject* to_screen(b2Vec2& point) {
             long x=(long)((point.x * zoom) - offset.x);
             if (flipX) { x = (long)screenSize.x - x; }
@@ -147,6 +206,7 @@ public:
         virtual void DrawSolidPolygon(const b2Vec2* conv_vertices, int32 vertexCount, const b2Color& color) = 0;
         virtual void DrawCircle(const b2Vec2& conv_p1, float32 radius, const b2Color& color) = 0;
         virtual void DrawSolidCircle(const b2Vec2& conv_p1, float32 radius, const b2Vec2& axis, const b2Color& color) = 0;
+        virtual void DrawParticles(const b2Vec2 *conv_centers, int32 centerCount, float32 radius, const b2ParticleColor *conv_colors, int32 colorCount) = 0;
         virtual void DrawSegment(const b2Vec2& conv_p1, const b2Vec2& conv_p2, const b2Color& color) = 0;
         virtual void DrawTransform(const b2Transform& xf) = 0;
 
