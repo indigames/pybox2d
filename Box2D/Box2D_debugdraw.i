@@ -160,19 +160,19 @@ public:
             PyObject* center;
             b2Vec2 c;            
             if (GetFlags() & e_convertVertices) {                
-                long x, y;
+                float x, y;
                 for (int i=0; i < count; i++) {
                     center = PyTuple_New(2);
                     c = *(centers + i);
 
-                    x=(long)((c.x * zoom) - offset.x);
-                    if (flipX) { x = (long)screenSize.x - x; }
+                    x=((c.x * zoom) - offset.x);
+                    if (flipX) { x = screenSize.x - x; }
 
-                    y=(long)((c.y * zoom) - offset.y);
-                    if (flipY) { y = (long)screenSize.y - y; }
+                    y=((c.y * zoom) - offset.y);
+                    if (flipY) { y = screenSize.y - y; }
 
-                    PyTuple_SetItem(center, 0, SWIG_From_long(x));
-                    PyTuple_SetItem(center, 1, SWIG_From_long(y));
+                    PyTuple_SetItem(center, 0, SWIG_From_double(x));
+                    PyTuple_SetItem(center, 1, SWIG_From_double(y));
 
                     PyTuple_SetItem(ret, i, center);
                 }
@@ -180,8 +180,8 @@ public:
                 for (int i=0; i < count; i++) {
                     center = PyTuple_New(2);
                     c = *(centers + i);
-                    PyTuple_SetItem(center, 0, SWIG_From_long(c.x));
-                    PyTuple_SetItem(center, 1, SWIG_From_long(c.y));
+                    PyTuple_SetItem(center, 0, SWIG_From_double(c.x));
+                    PyTuple_SetItem(center, 1, SWIG_From_double(c.y));
                     PyTuple_SetItem(ret, i, center);
                 }
             }
