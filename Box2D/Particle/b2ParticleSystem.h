@@ -23,6 +23,10 @@
 #include <Box2D/Particle/b2Particle.h>
 #include <Box2D/Dynamics/b2TimeStep.h>
 
+#include <Box2D/Dynamics/b2WorldCallbacks.h>
+#include <Box2D/Collision/Shapes/b2Shape.h>
+#include <Box2D/Dynamics/b2Fixture.h>
+
 #if LIQUIDFUN_UNIT_TESTS
 #include <gtest/gtest.h>
 #endif // LIQUIDFUN_UNIT_TESTS
@@ -1146,6 +1150,11 @@ private:
 	b2World* m_world;
 	b2ParticleSystem* m_prev;
 	b2ParticleSystem* m_next;
+	
+public:
+	/// Color mixing timer
+	float32 m_colorMixingTimer;
+	inline void SetColorMixingTimer(float32 time) { m_colorMixingTimer = time; }
 };
 
 inline void b2ParticleContact::SetIndices(int32 a, int32 b)
@@ -1466,6 +1475,93 @@ inline void b2ParticleSystem::ParticleApplyLinearImpulse(int32 index,
 	ApplyLinearImpulse(index, index + 1, impulse);
 }
 
+/// Callback class to receive pairs of fixtures and particles which may be
+/// overlapping. Used as an argument of b2World::QueryAABB.
+
+class b2FixtureParticleQueryCallback : public b2QueryCallback
+{
+public:
+	b2FixtureParticleQueryCallback(b2ParticleSystem* system)
+	{
+		m_system = system;
+	}	
+
+	// Skip reporting particles.
+	bool ShouldQueryParticleSystem(const b2ParticleSystem* system)
+	{
+		B2_NOT_USED(system);
+		return false;
+	}
+
+	// Receive a fixture and call ReportFixtureAndParticle() for each particle
+	// inside aabb of the fixture.
+	virtual bool ReportFixture(b2Fixture* fixture)
+	{
+		if (fixture->IsSensor())
+		{
+			return true;
+		}
+		const b2Shape* shape = fixture->GetShape();
+		int32 childCount = shape->GetChildCount();
+		for (int32 childIndex = 0; childIndex < childCount; childIndex++)
+		{
+			b2AABB aabb = fixture->GetAABB(childIndex);
+			b2ParticleSystem::InsideBoundsEnumerator enumerator =
+								m_system->GetInsideBoundsEnumerator(aabb);
+			int32 index;
+			while ((index = enumerator.GetNext()) >= 0)
+			{
+				ReportFixtureAndParticle(fixture, childIndex, index);
+			}
+		}
+		return true;
+	}
+
+	// Receive a fixture and a particle which may be overlapping.
+	virtual void ReportFixtureAndParticle(
+						b2Fixture* fixture, int32 childIndex, int32 index) = 0;
+
+protected:
+	b2ParticleSystem* m_system;
+};
+
+/// Callback class to receive pairs of fixtures and particles which may be
+/// overlapping. Used as an argument of b2World::QueryAABB.
+class b2ParticlesInShapeQueryCallback : public b2QueryCallback
+{
+public:
+	b2ParticlesInShapeQueryCallback(b2ParticleSystem* system, const b2Shape& shape, const b2Transform& xf)
+	{
+		m_system = system;
+		m_shape = &shape;
+		m_xf = xf;
+	}
+	
+	void UpdateShapeTransform(const b2Shape& shape, const b2Transform& xf)
+	{
+		m_shape = &shape;
+		m_xf = xf;
+	}
+
+	virtual bool ReportParticle(const b2ParticleSystem* particleSystem, int32 index)
+	{
+		if (particleSystem != m_system)
+			return false;
+
+		b2Assert(index >=0 && index < m_system->GetParticleCount());
+		if (m_shape->TestPoint(m_xf, m_system->GetPositionBuffer()[index]))
+		{
+			return true;
+		}
+		return false;
+	}
+
+
+protected:
+	b2ParticleSystem* m_system;
+	const b2Shape* m_shape;
+	b2Transform m_xf;
+};
 
 // Note: These functions must go in the header so the unit tests will compile
 // them. b2ParticleSystem.cpp does not compile with this #define.

@@ -56,7 +56,7 @@ from pygame.locals import (QUIT, KEYDOWN, KEYUP, MOUSEBUTTONDOWN,
 
 from ..framework import (FrameworkBase, Keys)
 from ..settings import fwSettings
-from Box2D import (b2DrawExtended, b2Vec2, b2ParticleColor)
+from Box2D import (b2DrawExtended, b2Vec2)
 
 try:
     from .pygame_gui import (fwGUI, gui)
@@ -159,19 +159,6 @@ class PygameDraw(b2DrawExtended):
         pygame.draw.aaline(self.surface, (255, 0, 0), center,
                            (center[0] - radius * axis[0],
                             center[1] + radius * axis[1]))
-    
-    def DrawParticles(self, centers, radius, colors):
-        """
-        Draw a particle array
-        """
-        if radius < 1:
-            radius = 1
-        else:
-            radius = int(radius)
-                
-        for i in range(0, len(centers)):
-            color = b2ParticleColor(colors[i][0], colors[i][1], colors[i][2], colors[i][3])           
-            pygame.draw.circle(self.surface, color.GetColor().bytes, centers[i] , radius)
 
     def DrawPolygon(self, vertices, color):
         """

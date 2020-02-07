@@ -26,6 +26,12 @@
 
 #define B2_NOT_USED(x) ((void)(x))
 #define USE_EXCEPTIONS
+#define B2_USE_16_BIT_PARTICLE_INDICES
+
+// Try enable NEON on arm7
+// #if defined(__ARM_NEON__) && !defined(__aarch64__)
+    // #define LIQUIDFUN_SIMD_NEON
+// #endif
 
 #ifdef USE_EXCEPTIONS
 #include <Python.h>

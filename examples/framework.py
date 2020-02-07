@@ -28,8 +28,6 @@ from Box2D import (b2ContactListener, b2DestructionListener, b2DrawExtended)
 from Box2D import (b2Fixture, b2FixtureDef, b2Joint)
 from Box2D import (b2GetPointStates, b2QueryCallback, b2Random)
 from Box2D import (b2_addState, b2_dynamicBody, b2_epsilon, b2_persistState)
-from Box2D import (b2ParticleDef, b2ParticleSystem,
-                   b2ParticleSystemDef, b2ParticleColor)
 
 from .settings import fwSettings
 
@@ -103,18 +101,6 @@ class FrameworkBase(b2ContactListener):
         'contact_normal': b2Color(0.4, 0.9, 0.4),
     }
 
-    k_ParticleColors = (
-        b2ParticleColor(0xff, 0x00, 0x00, 0xff),  # red
-        b2ParticleColor(0x00, 0xff, 0x00, 0xff),  # green
-        b2ParticleColor(0x00, 0x00, 0xff, 0xff),  # blue
-        b2ParticleColor(0xff, 0x8c, 0x00, 0xff),  # orange
-        b2ParticleColor(0x00, 0xce, 0xd1, 0xff),  # turquoise
-        b2ParticleColor(0xff, 0x00, 0xff, 0xff),  # magenta
-        b2ParticleColor(0xff, 0xd7, 0x00, 0xff),  # gold
-        b2ParticleColor(0x00, 0xff, 0xff, 0xff),  # cyan
-    )
-    k_ParticleColorsCount = 8
-
     def __reset(self):
         """ Reset all of the variables to their starting values.
         Not to be called except at initialization."""
@@ -129,9 +115,6 @@ class FrameworkBase(b2ContactListener):
         self.mouseWorld = None
         self.using_contacts = False
         self.stepCount = 0
-
-        # liquid fun with particle system
-        self.particleSystem = None
 
         # Box2D-callbacks
         self.destructionListener = None
@@ -149,31 +132,6 @@ class FrameworkBase(b2ContactListener):
         self.world.destructionListener = self.destructionListener
         self.world.contactListener = self
         self.t_steps, self.t_draws = [], []
-
-        # Create Particle System
-        particleSystemDef = b2ParticleSystemDef()
-        self.particleSystem = self.world.CreateParticleSystem(
-            particleSystemDef)
-
-        # Particle system initialization
-        self.particleSystem.SetGravityScale(0.4)
-        self.particleSystem.SetDensity(1.2)
-
-    def ColorParticleGroup(self, group, particlesPerColor):
-        colorBuffer = self.particleSystem.GetColorBuffer()
-        particleCount = group.GetParticleCount()
-        groupStart = group.GetBufferIndex()
-        groupEnd = particleCount + groupStart
-        colorCount = self.k_ParticleColorsCount
-
-        if particlesPerColor == 0:
-            particlesPerColor = particleCount / colorCount
-            if particlesPerColor == 0:
-                particlesPerColor = 1
-
-        # @thai.phi: this is currently not working
-        # for i in range(groupStart, groupEnd):
-        #     colorBuffer[i] = self.k_ParticleColors[int(i / particlesPerColor)]
 
     def __del__(self):
         pass
@@ -215,7 +173,6 @@ class FrameworkBase(b2ContactListener):
                                   drawAABBs=settings.drawAABBs,
                                   drawPairs=settings.drawPairs,
                                   drawCOMs=settings.drawCOMs,
-                                  drawParticles=settings.drawParticles,
                                   convertVertices=is_extended,
                                   )
 
@@ -223,7 +180,6 @@ class FrameworkBase(b2ContactListener):
         self.world.warmStarting = settings.enableWarmStarting
         self.world.continuousPhysics = settings.enableContinuous
         self.world.subStepping = settings.enableSubStepping
-        self.particleSystem.SetStrictContactCheck(settings.strictContacts)
 
         # Reset the collision points
         self.points = []
@@ -567,6 +523,7 @@ if __name__ == '__main__':
 # framework, then your file should be 'backends/foobar_framework.py' and you
 # should have a class 'FoobarFramework' that subclasses FrameworkBase. Ensure
 # proper capitalization for portability.
+from . import backends
 
 try:
     framework_name = '%s_framework' % (fwSettings.backend.lower())

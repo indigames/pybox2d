@@ -433,6 +433,8 @@ b2ParticleSystem::b2ParticleSystem(const b2ParticleSystemDef* def,
 	m_expirationTimeBufferRequiresSorting = false;
 
 	SetDestructionByAge(m_def.destroyByAge);
+
+	m_colorMixingTimer = 999999.0f;
 }
 
 b2ParticleSystem::~b2ParticleSystem()
@@ -2494,55 +2496,57 @@ int32 b2ParticlePairSet::Find(const ParticlePair& pair) const
 	return index;
 }
 
+/* MOVED TO HEADER TO MAKE USE OF PYTHON EXTENSIONS
 /// Callback class to receive pairs of fixtures and particles which may be
 /// overlapping. Used as an argument of b2World::QueryAABB.
-class b2FixtureParticleQueryCallback : public b2QueryCallback
-{
-public:
-	explicit b2FixtureParticleQueryCallback(b2ParticleSystem* system)
-	{
-		m_system = system;
-	}
+// class b2FixtureParticleQueryCallback : public b2QueryCallback
+// {
+// public:
+// 	explicit b2FixtureParticleQueryCallback(b2ParticleSystem* system)
+// 	{
+// 		m_system = system;
+// 	}
 
-private:
-	// Skip reporting particles.
-	bool ShouldQueryParticleSystem(const b2ParticleSystem* system)
-	{
-		B2_NOT_USED(system);
-		return false;
-	}
+// private:
+// 	// Skip reporting particles.
+// 	bool ShouldQueryParticleSystem(const b2ParticleSystem* system)
+// 	{
+// 		B2_NOT_USED(system);
+// 		return false;
+// 	}
 
-	// Receive a fixture and call ReportFixtureAndParticle() for each particle
-	// inside aabb of the fixture.
-	bool ReportFixture(b2Fixture* fixture)
-	{
-		if (fixture->IsSensor())
-		{
-			return true;
-		}
-		const b2Shape* shape = fixture->GetShape();
-		int32 childCount = shape->GetChildCount();
-		for (int32 childIndex = 0; childIndex < childCount; childIndex++)
-		{
-			b2AABB aabb = fixture->GetAABB(childIndex);
-			b2ParticleSystem::InsideBoundsEnumerator enumerator =
-								m_system->GetInsideBoundsEnumerator(aabb);
-			int32 index;
-			while ((index = enumerator.GetNext()) >= 0)
-			{
-				ReportFixtureAndParticle(fixture, childIndex, index);
-			}
-		}
-		return true;
-	}
+// 	// Receive a fixture and call ReportFixtureAndParticle() for each particle
+// 	// inside aabb of the fixture.
+// 	bool ReportFixture(b2Fixture* fixture)
+// 	{
+// 		if (fixture->IsSensor())
+// 		{
+// 			return true;
+// 		}
+// 		const b2Shape* shape = fixture->GetShape();
+// 		int32 childCount = shape->GetChildCount();
+// 		for (int32 childIndex = 0; childIndex < childCount; childIndex++)
+// 		{
+// 			b2AABB aabb = fixture->GetAABB(childIndex);
+// 			b2ParticleSystem::InsideBoundsEnumerator enumerator =
+// 								m_system->GetInsideBoundsEnumerator(aabb);
+// 			int32 index;
+// 			while ((index = enumerator.GetNext()) >= 0)
+// 			{
+// 				ReportFixtureAndParticle(fixture, childIndex, index);
+// 			}
+// 		}
+// 		return true;
+// 	}
 
-	// Receive a fixture and a particle which may be overlapping.
-	virtual void ReportFixtureAndParticle(
-						b2Fixture* fixture, int32 childIndex, int32 index) = 0;
+// 	// Receive a fixture and a particle which may be overlapping.
+// 	virtual void ReportFixtureAndParticle(
+// 						b2Fixture* fixture, int32 childIndex, int32 index) = 0;
 
-protected:
-	b2ParticleSystem* m_system;
-};
+// protected:
+// 	b2ParticleSystem* m_system;
+// };
+// END MOVED TO HEADER */
 
 void b2ParticleSystem::NotifyBodyContactListenerPreContact(
 	FixtureParticleSet* fixtureSet) const
@@ -3023,7 +3027,11 @@ void b2ParticleSystem::Solve(const b2TimeStep& step)
 		}
 		if (m_allParticleFlags & b2_colorMixingParticle)
 		{
-			SolveColorMixing();
+			if(m_colorMixingTimer > 0.0f)
+			{
+				SolveColorMixing();
+				m_colorMixingTimer -= step.dt;
+			}
 		}
 		SolveGravity(subStep);
 		if (m_allParticleFlags & b2_staticPressureParticle)

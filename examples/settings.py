@@ -33,7 +33,6 @@ class fwSettings(object):
     enableWarmStarting = True
     enableContinuous = True     # Calculate time of impact
     enableSubStepping = False
-    strictContacts = False # Patticle System
 
     # Drawing
     drawStats = True
@@ -43,7 +42,6 @@ class fwSettings(object):
     drawAABBs = False
     drawOBBs = False
     drawPairs = False
-    drawParticles = True # Patticle System
     drawContactPoints = False
     maxContactPoints = 100
     drawContactNormals = False
@@ -75,8 +73,7 @@ checkboxes = (("Warm Starting", "enableWarmStarting"),
               ("FPS", "drawFPS"),
               ("Control", None),
               ("Pause", "pause"),
-              ("Single Step", "singleStep"),
-              ("Particle strict contact", "strictContacts"))
+              ("Single Step", "singleStep"))
 
 sliders = [
     {'name': 'hz', 'text': 'Hertz', 'min': 5, 'max': 200},

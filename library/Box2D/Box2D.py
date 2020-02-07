@@ -2001,310 +2001,213 @@ class b2SolverData(object):
 # Register b2SolverData in _Box2D:
 _Box2D.b2SolverData_swigregister(b2SolverData)
 
-class b2ParticleContact(object):
-    r"""Proxy of C++ b2ParticleContact class."""
+class b2DestructionListener(object):
+    r"""Joints and fixtures are destroyed when their associated body is destroyed. Implement this listener so that you may nullify references to these joints and shapes."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
-    SetIndices = _swig_new_instance_method(_Box2D.b2ParticleContact_SetIndices)
-    SetWeight = _swig_new_instance_method(_Box2D.b2ParticleContact_SetWeight)
-    SetNormal = _swig_new_instance_method(_Box2D.b2ParticleContact_SetNormal)
-    SetFlags = _swig_new_instance_method(_Box2D.b2ParticleContact_SetFlags)
-    GetIndexA = _swig_new_instance_method(_Box2D.b2ParticleContact_GetIndexA)
-    GetIndexB = _swig_new_instance_method(_Box2D.b2ParticleContact_GetIndexB)
-    GetWeight = _swig_new_instance_method(_Box2D.b2ParticleContact_GetWeight)
-    GetNormal = _swig_new_instance_method(_Box2D.b2ParticleContact_GetNormal)
-    GetFlags = _swig_new_instance_method(_Box2D.b2ParticleContact_GetFlags)
-    __eq__ = _swig_new_instance_method(_Box2D.b2ParticleContact___eq__)
-    __ne__ = _swig_new_instance_method(_Box2D.b2ParticleContact___ne__)
-    ApproximatelyEqual = _swig_new_instance_method(_Box2D.b2ParticleContact_ApproximatelyEqual)
+    __swig_destroy__ = _Box2D.delete_b2DestructionListener
+    SayGoodbye = _swig_new_instance_method(_Box2D.b2DestructionListener_SayGoodbye)
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2DestructionListener___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self, **kwargs):
+        if self.__class__ == b2DestructionListener:
+            _self = None
+        else:
+            _self = self
+        _Box2D.b2DestructionListener_swiginit(self,_Box2D.new_b2DestructionListener(_self, ))
+        _init_kwargs(self, **kwargs)
+
+
+    def __disown__(self):
+        self.this.disown()
+        _Box2D.disown_b2DestructionListener(self)
+        return weakref.proxy(self)
+
+# Register b2DestructionListener in _Box2D:
+_Box2D.b2DestructionListener_swigregister(b2DestructionListener)
+
+class b2ContactFilter(object):
+    r"""Implement this class to provide collision filtering. In other words, you can implement this class if you want finer control over contact creation."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    __swig_destroy__ = _Box2D.delete_b2ContactFilter
+    ShouldCollide = _swig_new_instance_method(_Box2D.b2ContactFilter_ShouldCollide)
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2ContactFilter___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self, **kwargs):
+        if self.__class__ == b2ContactFilter:
+            _self = None
+        else:
+            _self = self
+        _Box2D.b2ContactFilter_swiginit(self,_Box2D.new_b2ContactFilter(_self, ))
+        _init_kwargs(self, **kwargs)
+
+
+    def __disown__(self):
+        self.this.disown()
+        _Box2D.disown_b2ContactFilter(self)
+        return weakref.proxy(self)
+
+# Register b2ContactFilter in _Box2D:
+_Box2D.b2ContactFilter_swigregister(b2ContactFilter)
+
+class b2ContactImpulse(object):
+    r"""Contact impulses for reporting. Impulses are used instead of forces because sub-step forces may approach infinity for rigid body collisions. These match up one-to-one with the contact points in  b2Manifold."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    count = property(_Box2D.b2ContactImpulse_count_get, _Box2D.b2ContactImpulse_count_set, doc=r"""count : int32""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2ContactImpulse___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+    __get_normal_impulses = _swig_new_instance_method(_Box2D.b2ContactImpulse___get_normal_impulses)
+    __get_tangent_impulses = _swig_new_instance_method(_Box2D.b2ContactImpulse___get_tangent_impulses)
+
+    normalImpulses = property(__get_normal_impulses, None)
+    tangentImpulses = property(__get_tangent_impulses, None)
+
+
+    def __init__(self, **kwargs):
+        _Box2D.b2ContactImpulse_swiginit(self,_Box2D.new_b2ContactImpulse())
+        _init_kwargs(self, **kwargs)
+
+
+    __swig_destroy__ = _Box2D.delete_b2ContactImpulse
+
+# Register b2ContactImpulse in _Box2D:
+_Box2D.b2ContactImpulse_swigregister(b2ContactImpulse)
+
+class b2ContactListener(object):
+    r"""
+    Implement this class to get contact information. You can use these results for things like sounds and game logic. You can also get contact results by traversing the contact lists after the time step. However, you might miss some contacts because continuous physics leads to sub-stepping. Additionally you may receive multiple callbacks for the same contact in a single time step. You should strive to make your callbacks efficient because there may be many callbacks per time step. 
+    WARNING: 
+    You cannot create/destroy Box2D entities inside these callbacks.
+    """
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    __swig_destroy__ = _Box2D.delete_b2ContactListener
+    BeginContact = _swig_new_instance_method(_Box2D.b2ContactListener_BeginContact)
+    EndContact = _swig_new_instance_method(_Box2D.b2ContactListener_EndContact)
+    PreSolve = _swig_new_instance_method(_Box2D.b2ContactListener_PreSolve)
+    PostSolve = _swig_new_instance_method(_Box2D.b2ContactListener_PostSolve)
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2ContactListener___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self, **kwargs):
+        if self.__class__ == b2ContactListener:
+            _self = None
+        else:
+            _self = self
+        _Box2D.b2ContactListener_swiginit(self,_Box2D.new_b2ContactListener(_self, ))
+        _init_kwargs(self, **kwargs)
+
+
+    def __disown__(self):
+        self.this.disown()
+        _Box2D.disown_b2ContactListener(self)
+        return weakref.proxy(self)
+
+# Register b2ContactListener in _Box2D:
+_Box2D.b2ContactListener_swigregister(b2ContactListener)
+
+class b2QueryCallback(object):
+    r"""Callback class for AABB queries. See b2World::Query"""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    __swig_destroy__ = _Box2D.delete_b2QueryCallback
+    ReportFixture = _swig_new_instance_method(_Box2D.b2QueryCallback_ReportFixture)
+    ReportParticle = _swig_new_instance_method(_Box2D.b2QueryCallback_ReportParticle)
+    ShouldQueryParticleSystem = _swig_new_instance_method(_Box2D.b2QueryCallback_ShouldQueryParticleSystem)
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2QueryCallback___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self, **kwargs):
+        if self.__class__ == b2QueryCallback:
+            _self = None
+        else:
+            _self = self
+        _Box2D.b2QueryCallback_swiginit(self,_Box2D.new_b2QueryCallback(_self, ))
+        _init_kwargs(self, **kwargs)
+
+
+    def __disown__(self):
+        self.this.disown()
+        _Box2D.disown_b2QueryCallback(self)
+        return weakref.proxy(self)
+
+# Register b2QueryCallback in _Box2D:
+_Box2D.b2QueryCallback_swigregister(b2QueryCallback)
+
+class b2RayCastCallback(object):
+    r"""Callback class for ray casts. See  b2World::RayCast"""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    __swig_destroy__ = _Box2D.delete_b2RayCastCallback
+    ReportFixture = _swig_new_instance_method(_Box2D.b2RayCastCallback_ReportFixture)
+    ReportParticle = _swig_new_instance_method(_Box2D.b2RayCastCallback_ReportParticle)
+    ShouldQueryParticleSystem = _swig_new_instance_method(_Box2D.b2RayCastCallback_ShouldQueryParticleSystem)
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2RayCastCallback___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
 
     def __init__(self):
-        r"""__init__(b2ParticleContact self) -> b2ParticleContact"""
-        _Box2D.b2ParticleContact_swiginit(self, _Box2D.new_b2ParticleContact())
-    __swig_destroy__ = _Box2D.delete_b2ParticleContact
+        r"""
+        __init__(b2RayCastCallback self) -> b2RayCastCallback
+        Callback class for ray casts. See  b2World::RayCast
+        """
+        if self.__class__ == b2RayCastCallback:
+            _self = None
+        else:
+            _self = self
+        _Box2D.b2RayCastCallback_swiginit(self, _Box2D.new_b2RayCastCallback(_self, ))
+    def __disown__(self):
+        self.this.disown()
+        _Box2D.disown_b2RayCastCallback(self)
+        return weakref.proxy(self)
 
-# Register b2ParticleContact in _Box2D:
-_Box2D.b2ParticleContact_swigregister(b2ParticleContact)
-
-class b2ParticleBodyContact(object):
-    r"""Proxy of C++ b2ParticleBodyContact class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    index = property(_Box2D.b2ParticleBodyContact_index_get, _Box2D.b2ParticleBodyContact_index_set, doc=r"""index : int32""")
-    body = property(_Box2D.b2ParticleBodyContact_body_get, _Box2D.b2ParticleBodyContact_body_set, doc=r"""body : p.b2Body""")
-    fixture = property(_Box2D.b2ParticleBodyContact_fixture_get, _Box2D.b2ParticleBodyContact_fixture_set, doc=r"""fixture : p.b2Fixture""")
-    weight = property(_Box2D.b2ParticleBodyContact_weight_get, _Box2D.b2ParticleBodyContact_weight_set, doc=r"""weight : float32""")
-    normal = property(_Box2D.b2ParticleBodyContact_normal_get, _Box2D.b2ParticleBodyContact_normal_set, doc=r"""normal : b2Vec2""")
-    mass = property(_Box2D.b2ParticleBodyContact_mass_get, _Box2D.b2ParticleBodyContact_mass_set, doc=r"""mass : float32""")
-
-    def __init__(self):
-        r"""__init__(b2ParticleBodyContact self) -> b2ParticleBodyContact"""
-        _Box2D.b2ParticleBodyContact_swiginit(self, _Box2D.new_b2ParticleBodyContact())
-    __swig_destroy__ = _Box2D.delete_b2ParticleBodyContact
-
-# Register b2ParticleBodyContact in _Box2D:
-_Box2D.b2ParticleBodyContact_swigregister(b2ParticleBodyContact)
-
-class b2ParticlePair(object):
-    r"""Proxy of C++ b2ParticlePair class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    indexA = property(_Box2D.b2ParticlePair_indexA_get, _Box2D.b2ParticlePair_indexA_set, doc=r"""indexA : int32""")
-    indexB = property(_Box2D.b2ParticlePair_indexB_get, _Box2D.b2ParticlePair_indexB_set, doc=r"""indexB : int32""")
-    flags = property(_Box2D.b2ParticlePair_flags_get, _Box2D.b2ParticlePair_flags_set, doc=r"""flags : uint32""")
-    strength = property(_Box2D.b2ParticlePair_strength_get, _Box2D.b2ParticlePair_strength_set, doc=r"""strength : float32""")
-    distance = property(_Box2D.b2ParticlePair_distance_get, _Box2D.b2ParticlePair_distance_set, doc=r"""distance : float32""")
-
-    def __init__(self):
-        r"""__init__(b2ParticlePair self) -> b2ParticlePair"""
-        _Box2D.b2ParticlePair_swiginit(self, _Box2D.new_b2ParticlePair())
-    __swig_destroy__ = _Box2D.delete_b2ParticlePair
-
-# Register b2ParticlePair in _Box2D:
-_Box2D.b2ParticlePair_swigregister(b2ParticlePair)
-
-class b2ParticleTriad(object):
-    r"""Proxy of C++ b2ParticleTriad class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    indexA = property(_Box2D.b2ParticleTriad_indexA_get, _Box2D.b2ParticleTriad_indexA_set, doc=r"""indexA : int32""")
-    indexB = property(_Box2D.b2ParticleTriad_indexB_get, _Box2D.b2ParticleTriad_indexB_set, doc=r"""indexB : int32""")
-    indexC = property(_Box2D.b2ParticleTriad_indexC_get, _Box2D.b2ParticleTriad_indexC_set, doc=r"""indexC : int32""")
-    flags = property(_Box2D.b2ParticleTriad_flags_get, _Box2D.b2ParticleTriad_flags_set, doc=r"""flags : uint32""")
-    strength = property(_Box2D.b2ParticleTriad_strength_get, _Box2D.b2ParticleTriad_strength_set, doc=r"""strength : float32""")
-    pa = property(_Box2D.b2ParticleTriad_pa_get, _Box2D.b2ParticleTriad_pa_set, doc=r"""pa : b2Vec2""")
-    pb = property(_Box2D.b2ParticleTriad_pb_get, _Box2D.b2ParticleTriad_pb_set, doc=r"""pb : b2Vec2""")
-    pc = property(_Box2D.b2ParticleTriad_pc_get, _Box2D.b2ParticleTriad_pc_set, doc=r"""pc : b2Vec2""")
-    ka = property(_Box2D.b2ParticleTriad_ka_get, _Box2D.b2ParticleTriad_ka_set, doc=r"""ka : float32""")
-    kb = property(_Box2D.b2ParticleTriad_kb_get, _Box2D.b2ParticleTriad_kb_set, doc=r"""kb : float32""")
-    kc = property(_Box2D.b2ParticleTriad_kc_get, _Box2D.b2ParticleTriad_kc_set, doc=r"""kc : float32""")
-    s = property(_Box2D.b2ParticleTriad_s_get, _Box2D.b2ParticleTriad_s_set, doc=r"""s : float32""")
-
-    def __init__(self):
-        r"""__init__(b2ParticleTriad self) -> b2ParticleTriad"""
-        _Box2D.b2ParticleTriad_swiginit(self, _Box2D.new_b2ParticleTriad())
-    __swig_destroy__ = _Box2D.delete_b2ParticleTriad
-
-# Register b2ParticleTriad in _Box2D:
-_Box2D.b2ParticleTriad_swigregister(b2ParticleTriad)
-
-class b2ParticleSystemDef(object):
-    r"""Proxy of C++ b2ParticleSystemDef class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self):
-        r"""__init__(b2ParticleSystemDef self) -> b2ParticleSystemDef"""
-        _Box2D.b2ParticleSystemDef_swiginit(self, _Box2D.new_b2ParticleSystemDef())
-    strictContactCheck = property(_Box2D.b2ParticleSystemDef_strictContactCheck_get, _Box2D.b2ParticleSystemDef_strictContactCheck_set, doc=r"""strictContactCheck : bool""")
-    density = property(_Box2D.b2ParticleSystemDef_density_get, _Box2D.b2ParticleSystemDef_density_set, doc=r"""density : float32""")
-    gravityScale = property(_Box2D.b2ParticleSystemDef_gravityScale_get, _Box2D.b2ParticleSystemDef_gravityScale_set, doc=r"""gravityScale : float32""")
-    radius = property(_Box2D.b2ParticleSystemDef_radius_get, _Box2D.b2ParticleSystemDef_radius_set, doc=r"""radius : float32""")
-    maxCount = property(_Box2D.b2ParticleSystemDef_maxCount_get, _Box2D.b2ParticleSystemDef_maxCount_set, doc=r"""maxCount : int32""")
-    pressureStrength = property(_Box2D.b2ParticleSystemDef_pressureStrength_get, _Box2D.b2ParticleSystemDef_pressureStrength_set, doc=r"""pressureStrength : float32""")
-    dampingStrength = property(_Box2D.b2ParticleSystemDef_dampingStrength_get, _Box2D.b2ParticleSystemDef_dampingStrength_set, doc=r"""dampingStrength : float32""")
-    elasticStrength = property(_Box2D.b2ParticleSystemDef_elasticStrength_get, _Box2D.b2ParticleSystemDef_elasticStrength_set, doc=r"""elasticStrength : float32""")
-    springStrength = property(_Box2D.b2ParticleSystemDef_springStrength_get, _Box2D.b2ParticleSystemDef_springStrength_set, doc=r"""springStrength : float32""")
-    viscousStrength = property(_Box2D.b2ParticleSystemDef_viscousStrength_get, _Box2D.b2ParticleSystemDef_viscousStrength_set, doc=r"""viscousStrength : float32""")
-    surfaceTensionPressureStrength = property(_Box2D.b2ParticleSystemDef_surfaceTensionPressureStrength_get, _Box2D.b2ParticleSystemDef_surfaceTensionPressureStrength_set, doc=r"""surfaceTensionPressureStrength : float32""")
-    surfaceTensionNormalStrength = property(_Box2D.b2ParticleSystemDef_surfaceTensionNormalStrength_get, _Box2D.b2ParticleSystemDef_surfaceTensionNormalStrength_set, doc=r"""surfaceTensionNormalStrength : float32""")
-    repulsiveStrength = property(_Box2D.b2ParticleSystemDef_repulsiveStrength_get, _Box2D.b2ParticleSystemDef_repulsiveStrength_set, doc=r"""repulsiveStrength : float32""")
-    powderStrength = property(_Box2D.b2ParticleSystemDef_powderStrength_get, _Box2D.b2ParticleSystemDef_powderStrength_set, doc=r"""powderStrength : float32""")
-    ejectionStrength = property(_Box2D.b2ParticleSystemDef_ejectionStrength_get, _Box2D.b2ParticleSystemDef_ejectionStrength_set, doc=r"""ejectionStrength : float32""")
-    staticPressureStrength = property(_Box2D.b2ParticleSystemDef_staticPressureStrength_get, _Box2D.b2ParticleSystemDef_staticPressureStrength_set, doc=r"""staticPressureStrength : float32""")
-    staticPressureRelaxation = property(_Box2D.b2ParticleSystemDef_staticPressureRelaxation_get, _Box2D.b2ParticleSystemDef_staticPressureRelaxation_set, doc=r"""staticPressureRelaxation : float32""")
-    staticPressureIterations = property(_Box2D.b2ParticleSystemDef_staticPressureIterations_get, _Box2D.b2ParticleSystemDef_staticPressureIterations_set, doc=r"""staticPressureIterations : int32""")
-    colorMixingStrength = property(_Box2D.b2ParticleSystemDef_colorMixingStrength_get, _Box2D.b2ParticleSystemDef_colorMixingStrength_set, doc=r"""colorMixingStrength : float32""")
-    destroyByAge = property(_Box2D.b2ParticleSystemDef_destroyByAge_get, _Box2D.b2ParticleSystemDef_destroyByAge_set, doc=r"""destroyByAge : bool""")
-    lifetimeGranularity = property(_Box2D.b2ParticleSystemDef_lifetimeGranularity_get, _Box2D.b2ParticleSystemDef_lifetimeGranularity_set, doc=r"""lifetimeGranularity : float32""")
-    __swig_destroy__ = _Box2D.delete_b2ParticleSystemDef
-
-# Register b2ParticleSystemDef in _Box2D:
-_Box2D.b2ParticleSystemDef_swigregister(b2ParticleSystemDef)
-
-class b2ParticleSystem(object):
-    r"""Proxy of C++ b2ParticleSystem class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-
-    def __init__(self, *args, **kwargs):
-        raise AttributeError("No constructor defined")
-    __repr__ = _swig_repr
-    CreateParticle = _swig_new_instance_method(_Box2D.b2ParticleSystem_CreateParticle)
-    GetParticleHandleFromIndex = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleHandleFromIndex)
-    DestroyParticle = _swig_new_instance_method(_Box2D.b2ParticleSystem_DestroyParticle)
-    DestroyOldestParticle = _swig_new_instance_method(_Box2D.b2ParticleSystem_DestroyOldestParticle)
-    DestroyParticlesInShape = _swig_new_instance_method(_Box2D.b2ParticleSystem_DestroyParticlesInShape)
-    CreateParticleGroup = _swig_new_instance_method(_Box2D.b2ParticleSystem_CreateParticleGroup)
-    JoinParticleGroups = _swig_new_instance_method(_Box2D.b2ParticleSystem_JoinParticleGroups)
-    SplitParticleGroup = _swig_new_instance_method(_Box2D.b2ParticleSystem_SplitParticleGroup)
-    GetParticleGroupList = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleGroupList)
-    GetParticleGroupCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleGroupCount)
-    GetParticleCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleCount)
-    GetMaxParticleCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetMaxParticleCount)
-    SetMaxParticleCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetMaxParticleCount)
-    GetAllParticleFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetAllParticleFlags)
-    GetAllGroupFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetAllGroupFlags)
-    SetPaused = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetPaused)
-    GetPaused = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPaused)
-    SetDensity = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetDensity)
-    GetDensity = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetDensity)
-    SetGravityScale = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetGravityScale)
-    GetGravityScale = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetGravityScale)
-    SetDamping = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetDamping)
-    GetDamping = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetDamping)
-    SetStaticPressureIterations = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetStaticPressureIterations)
-    GetStaticPressureIterations = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStaticPressureIterations)
-    SetRadius = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetRadius)
-    GetRadius = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetRadius)
-    GetPositionBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPositionBuffer)
-    GetVelocityBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetVelocityBuffer)
-    GetColorBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetColorBuffer)
-    GetGroupBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetGroupBuffer)
-    GetWeightBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetWeightBuffer)
-    GetUserDataBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetUserDataBuffer)
-    GetFlagsBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetFlagsBuffer)
-    SetParticleFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetParticleFlags)
-    GetParticleFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleFlags)
-    SetFlagsBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetFlagsBuffer)
-    SetPositionBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetPositionBuffer)
-    SetVelocityBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetVelocityBuffer)
-    SetColorBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetColorBuffer)
-    SetUserDataBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetUserDataBuffer)
-    GetContacts = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetContacts)
-    GetContactCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetContactCount)
-    GetBodyContacts = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetBodyContacts)
-    GetBodyContactCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetBodyContactCount)
-    GetPairs = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPairs)
-    GetPairCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPairCount)
-    GetTriads = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetTriads)
-    GetTriadCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetTriadCount)
-    SetStuckThreshold = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetStuckThreshold)
-    GetStuckCandidates = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStuckCandidates)
-    GetStuckCandidateCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStuckCandidateCount)
-    ComputeCollisionEnergy = _swig_new_instance_method(_Box2D.b2ParticleSystem_ComputeCollisionEnergy)
-    SetStrictContactCheck = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetStrictContactCheck)
-    GetStrictContactCheck = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStrictContactCheck)
-    SetParticleLifetime = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetParticleLifetime)
-    GetParticleLifetime = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleLifetime)
-    SetDestructionByAge = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetDestructionByAge)
-    GetDestructionByAge = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetDestructionByAge)
-    GetExpirationTimeBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetExpirationTimeBuffer)
-    ExpirationTimeToLifetime = _swig_new_instance_method(_Box2D.b2ParticleSystem_ExpirationTimeToLifetime)
-    GetIndexByExpirationTimeBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetIndexByExpirationTimeBuffer)
-    ParticleApplyLinearImpulse = _swig_new_instance_method(_Box2D.b2ParticleSystem_ParticleApplyLinearImpulse)
-    ApplyLinearImpulse = _swig_new_instance_method(_Box2D.b2ParticleSystem_ApplyLinearImpulse)
-    ParticleApplyForce = _swig_new_instance_method(_Box2D.b2ParticleSystem_ParticleApplyForce)
-    ApplyForce = _swig_new_instance_method(_Box2D.b2ParticleSystem_ApplyForce)
-    GetNext = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetNext)
-    QueryAABB = _swig_new_instance_method(_Box2D.b2ParticleSystem_QueryAABB)
-    QueryShapeAABB = _swig_new_instance_method(_Box2D.b2ParticleSystem_QueryShapeAABB)
-    RayCast = _swig_new_instance_method(_Box2D.b2ParticleSystem_RayCast)
-    ComputeAABB = _swig_new_instance_method(_Box2D.b2ParticleSystem_ComputeAABB)
-    b2_bufferTooSmall = _Box2D.b2ParticleSystem_b2_bufferTooSmall
-    
-    b2_particleIndexOutOfBounds = _Box2D.b2ParticleSystem_b2_particleIndexOutOfBounds
-    
-    b2_numErrors = _Box2D.b2ParticleSystem_b2_numErrors
-    
-    b2_noExceptions = _Box2D.b2ParticleSystem_b2_noExceptions
-    
-    SetParticleVelocity = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetParticleVelocity)
-    GetParticlePositionX = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticlePositionX)
-    GetParticlePositionY = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticlePositionY)
-    CopyPositionBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_CopyPositionBuffer)
-    CopyColorBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_CopyColorBuffer)
-    CopyWeightBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_CopyWeightBuffer)
-
-# Register b2ParticleSystem in _Box2D:
-_Box2D.b2ParticleSystem_swigregister(b2ParticleSystem)
-
-class b2VoronoiDiagram(object):
-    r"""Proxy of C++ b2VoronoiDiagram class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self, allocator, generatorCapacity):
-        r"""__init__(b2VoronoiDiagram self, b2StackAllocator * allocator, int32 generatorCapacity) -> b2VoronoiDiagram"""
-        _Box2D.b2VoronoiDiagram_swiginit(self, _Box2D.new_b2VoronoiDiagram(allocator, generatorCapacity))
-    __swig_destroy__ = _Box2D.delete_b2VoronoiDiagram
-    AddGenerator = _swig_new_instance_method(_Box2D.b2VoronoiDiagram_AddGenerator)
-    Generate = _swig_new_instance_method(_Box2D.b2VoronoiDiagram_Generate)
-    GetNodes = _swig_new_instance_method(_Box2D.b2VoronoiDiagram_GetNodes)
-
-# Register b2VoronoiDiagram in _Box2D:
-_Box2D.b2VoronoiDiagram_swigregister(b2VoronoiDiagram)
-b2_stackSize = b2Globals.b2_stackSize
-b2_maxStackEntries = b2Globals.b2_maxStackEntries
-
-class b2RopeDef(object):
-    r"""Proxy of C++ b2RopeDef class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self):
-        r"""__init__(b2RopeDef self) -> b2RopeDef"""
-        _Box2D.b2RopeDef_swiginit(self, _Box2D.new_b2RopeDef())
-    vertices = property(_Box2D.b2RopeDef_vertices_get, _Box2D.b2RopeDef_vertices_set, doc=r"""vertices : p.b2Vec2""")
-    count = property(_Box2D.b2RopeDef_count_get, _Box2D.b2RopeDef_count_set, doc=r"""count : int32""")
-    masses = property(_Box2D.b2RopeDef_masses_get, _Box2D.b2RopeDef_masses_set, doc=r"""masses : p.float32""")
-    gravity = property(_Box2D.b2RopeDef_gravity_get, _Box2D.b2RopeDef_gravity_set, doc=r"""gravity : b2Vec2""")
-    damping = property(_Box2D.b2RopeDef_damping_get, _Box2D.b2RopeDef_damping_set, doc=r"""damping : float32""")
-    k2 = property(_Box2D.b2RopeDef_k2_get, _Box2D.b2RopeDef_k2_set, doc=r"""k2 : float32""")
-    k3 = property(_Box2D.b2RopeDef_k3_get, _Box2D.b2RopeDef_k3_set, doc=r"""k3 : float32""")
-    __swig_destroy__ = _Box2D.delete_b2RopeDef
-
-# Register b2RopeDef in _Box2D:
-_Box2D.b2RopeDef_swigregister(b2RopeDef)
-
-class b2Rope(object):
-    r"""Proxy of C++ b2Rope class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self):
-        r"""__init__(b2Rope self) -> b2Rope"""
-        _Box2D.b2Rope_swiginit(self, _Box2D.new_b2Rope())
-    __swig_destroy__ = _Box2D.delete_b2Rope
-    Initialize = _swig_new_instance_method(_Box2D.b2Rope_Initialize)
-    Step = _swig_new_instance_method(_Box2D.b2Rope_Step)
-    GetVertexCount = _swig_new_instance_method(_Box2D.b2Rope_GetVertexCount)
-    GetVertices = _swig_new_instance_method(_Box2D.b2Rope_GetVertices)
-    Draw = _swig_new_instance_method(_Box2D.b2Rope_Draw)
-    SetAngle = _swig_new_instance_method(_Box2D.b2Rope_SetAngle)
-
-
-
-# Register b2Rope in _Box2D:
-_Box2D.b2Rope_swigregister(b2Rope)
-
-class b2Stat(object):
-    r"""Proxy of C++ b2Stat class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self):
-        r"""__init__(b2Stat self) -> b2Stat"""
-        _Box2D.b2Stat_swiginit(self, _Box2D.new_b2Stat())
-    Record = _swig_new_instance_method(_Box2D.b2Stat_Record)
-    GetCount = _swig_new_instance_method(_Box2D.b2Stat_GetCount)
-    GetMean = _swig_new_instance_method(_Box2D.b2Stat_GetMean)
-    GetMin = _swig_new_instance_method(_Box2D.b2Stat_GetMin)
-    GetMax = _swig_new_instance_method(_Box2D.b2Stat_GetMax)
-    Clear = _swig_new_instance_method(_Box2D.b2Stat_Clear)
-    __swig_destroy__ = _Box2D.delete_b2Stat
-
-# Register b2Stat in _Box2D:
-_Box2D.b2Stat_swigregister(b2Stat)
+# Register b2RayCastCallback in _Box2D:
+_Box2D.b2RayCastCallback_swigregister(b2RayCastCallback)
 
 class b2MassData(object):
     r"""This holds the mass data computed for a shape."""
@@ -2407,551 +2310,6 @@ class b2Shape(object):
 
 # Register b2Shape in _Box2D:
 _Box2D.b2Shape_swigregister(b2Shape)
-
-class b2CircleShape(b2Shape):
-    r"""A circle shape."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self, **kwargs):
-        _Box2D.b2CircleShape_swiginit(self,_Box2D.new_b2CircleShape())
-        _init_kwargs(self, **kwargs)
-
-
-    SetPosition = _swig_new_instance_method(_Box2D.b2CircleShape_SetPosition)
-    GetPositionX = _swig_new_instance_method(_Box2D.b2CircleShape_GetPositionX)
-    GetPositionY = _swig_new_instance_method(_Box2D.b2CircleShape_GetPositionY)
-    pos = property(_Box2D.b2CircleShape_pos_get, _Box2D.b2CircleShape_pos_set, doc=r"""pos : b2Vec2""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2CircleShape___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-
-    __swig_destroy__ = _Box2D.delete_b2CircleShape
-
-# Register b2CircleShape in _Box2D:
-_Box2D.b2CircleShape_swigregister(b2CircleShape)
-
-class b2EdgeShape(b2Shape):
-    r"""A line segment (edge) shape. These can be connected in chains or loops to other edge shapes. The connectivity information is used to ensure correct contact normals."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self, **kwargs):
-        _Box2D.b2EdgeShape_swiginit(self,_Box2D.new_b2EdgeShape())
-        _init_kwargs(self, **kwargs)
-
-
-    __Set = _swig_new_instance_method(_Box2D.b2EdgeShape___Set)
-    vertex1 = property(_Box2D.b2EdgeShape_vertex1_get, _Box2D.b2EdgeShape_vertex1_set, doc=r"""vertex1 : b2Vec2""")
-    vertex2 = property(_Box2D.b2EdgeShape_vertex2_get, _Box2D.b2EdgeShape_vertex2_set, doc=r"""vertex2 : b2Vec2""")
-    vertex0 = property(_Box2D.b2EdgeShape_vertex0_get, _Box2D.b2EdgeShape_vertex0_set, doc=r"""vertex0 : b2Vec2""")
-    vertex3 = property(_Box2D.b2EdgeShape_vertex3_get, _Box2D.b2EdgeShape_vertex3_set, doc=r"""vertex3 : b2Vec2""")
-    hasVertex0 = property(_Box2D.b2EdgeShape_hasVertex0_get, _Box2D.b2EdgeShape_hasVertex0_set, doc=r"""hasVertex0 : bool""")
-    hasVertex3 = property(_Box2D.b2EdgeShape_hasVertex3_get, _Box2D.b2EdgeShape_hasVertex3_set, doc=r"""hasVertex3 : bool""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2EdgeShape___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __repr__(self):
-        return "b2EdgeShape(vertices: %s)" % (self.vertices)
-
-    @property
-    def all_vertices(self):
-        """Returns all of the vertices as a list of tuples [ (x0,y0), (x1,y1), (x2,y2) (x3,y3) ]
-        Note that the validity of vertices 0 and 4 depend on whether or not
-        hasVertex0 and hasVertex3 are set.
-        """
-        return [tuple(self.vertex0), tuple(self.vertex1), tuple(self.vertex2), tuple(self.vertex3)]
-
-    def __get_vertices(self):
-        """Returns the basic vertices as a list of tuples [ (x1,y1), (x2,y2) ]
-        To include the supporting vertices, see 'all_vertices'
-
-        If you want to set vertex3 but not vertex0, pass in None for vertex0.
-        """
-        return [tuple(self.vertex1), tuple(self.vertex2)]
-
-    def __set_vertices(self, vertices):
-        if len(vertices)==2:
-            self.vertex1, self.vertex2=vertices
-            self.hasVertex0=False
-            self.hasVertex3=False
-        elif len(vertices)==3:
-            self.vertex0, self.vertex1, self.vertex2=vertices
-            self.hasVertex0=(vertices[0] != None)
-            self.hasVertex3=False
-        elif len(vertices)==4:
-            self.vertex0, self.vertex1, self.vertex2, self.vertex3=vertices
-            self.hasVertex0=(vertices[0] != None)
-            self.hasVertex3=True
-        else:
-            raise ValueError('Expected from 2 to 4 vertices.')
-
-    @property
-    def vertexCount(self):
-        """
-        Returns the number of valid vertices (as in, it counts whether or not 
-        hasVertex0 or hasVertex3 are set)
-        """
-        if self.hasVertex0 and self.hasVertex3:
-            return 4
-        elif self.hasVertex0 or self.hasVertex3:
-            return 3
-        else:
-            return 2
-
-    def __iter__(self):
-        """
-        Iterates over the vertices in the Edge
-        """
-        for v in self.vertices:
-            yield v
-
-    vertices=property(__get_vertices, __set_vertices)
-
-    __swig_destroy__ = _Box2D.delete_b2EdgeShape
-
-# Register b2EdgeShape in _Box2D:
-_Box2D.b2EdgeShape_swigregister(b2EdgeShape)
-
-class b2ChainShape(b2Shape):
-    r"""A loop shape is a free form sequence of line segments that form a circular list. The loop may cross upon itself, but this is not recommended for smooth collision. The loop has double sided collision, so you can use inside and outside collision. Therefore, you may use any winding order. Since there may be many vertices, they are allocated using b2Alloc."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self, **kwargs):
-        _Box2D.b2ChainShape_swiginit(self,_Box2D.new_b2ChainShape())
-        _init_kwargs(self, **kwargs)
-
-
-    __swig_destroy__ = _Box2D.delete_b2ChainShape
-    CreateLoop = _swig_new_instance_method(_Box2D.b2ChainShape_CreateLoop)
-    CreateChain = _swig_new_instance_method(_Box2D.b2ChainShape_CreateChain)
-    SetPrevVertex = _swig_new_instance_method(_Box2D.b2ChainShape_SetPrevVertex)
-    SetNextVertex = _swig_new_instance_method(_Box2D.b2ChainShape_SetNextVertex)
-    __GetChildEdge = _swig_new_instance_method(_Box2D.b2ChainShape___GetChildEdge)
-    m_prevVertex = property(_Box2D.b2ChainShape_m_prevVertex_get, _Box2D.b2ChainShape_m_prevVertex_set, doc=r"""m_prevVertex : b2Vec2""")
-    m_nextVertex = property(_Box2D.b2ChainShape_m_nextVertex_get, _Box2D.b2ChainShape_m_nextVertex_set, doc=r"""m_nextVertex : b2Vec2""")
-    m_hasPrevVertex = property(_Box2D.b2ChainShape_m_hasPrevVertex_get, _Box2D.b2ChainShape_m_hasPrevVertex_set, doc=r"""m_hasPrevVertex : bool""")
-    m_hasNextVertex = property(_Box2D.b2ChainShape_m_hasNextVertex_get, _Box2D.b2ChainShape_m_hasNextVertex_set, doc=r"""m_hasNextVertex : bool""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2ChainShape___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-    __get_vertices = _swig_new_instance_method(_Box2D.b2ChainShape___get_vertices)
-
-    def __repr__(self):
-        return "b2ChainShape(vertices: %s)" % (self.vertices)
-
-    def getChildEdge(self, index):
-        if childIndex >= self.childCount:
-            raise ValueError('Child index should be at most childCount=%d' % self.childCount)
-
-        edge=b2EdgeShape()
-        self.__GetChildEdge(edge, index)
-        return edge
-
-    def CreateLoop(self, values):
-        self.__set_vertices(values)
-
-    def CreateChain(self, values):
-        self.__set_vertices(values, False)
-
-    @property
-    def edges(self):
-        return [self.getChildEdge(i) for i in range(self.childCount)]
-
-    @property
-    def vertexCount(self):
-        return self.__get_count()
-
-    def __get_vertices(self):
-        """Returns all of the vertices as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]"""
-        return [ (self.__get_vertex(i).x, self.__get_vertex(i).y )
-                         for i in range(0, self.vertexCount)]
-
-    def __iter__(self):
-        """
-        Iterates over the vertices in the Chain
-        """
-        for v in self.vertices:
-            yield v
-
-    def __set_vertices(self, values, loop=True):
-        if not values or not isinstance(values, (list, tuple)) or (len(values) < 2):
-            raise ValueError('Expected tuple or list of length >= 2.')
-
-        for i,value in enumerate(values):
-            if isinstance(value, (tuple, list)):
-                if len(value) != 2:
-                    raise ValueError('Expected tuple or list of length 2, got length %d' % len(value))
-                for j in value:
-                     if not isinstance(j, (int, float)):
-                        raise ValueError('Expected int or float values, got %s' % (type(j)))
-            elif isinstance(value, b2Vec2):
-                pass
-            else:
-                raise ValueError('Expected tuple, list, or b2Vec2, got %s' % type(value))
-
-        vecs=_b2Vec2Array(len(values))
-        for i, value in enumerate(values):
-            if isinstance(value, b2Vec2):
-                vecs[i]=value
-            else:
-                vecs[i]=b2Vec2(value)
-
-        self.__create(vecs, len(values), loop)
-
-    vertices = property(__get_vertices, __set_vertices)
-    vertices_chain = property(__get_vertices, lambda self, v : self.__set_vertices(v, loop=False))
-    vertices_loop = vertices
-
-    __create = _swig_new_instance_method(_Box2D.b2ChainShape___create)
-    __get_vertex = _swig_new_instance_method(_Box2D.b2ChainShape___get_vertex)
-    __get_count = _swig_new_instance_method(_Box2D.b2ChainShape___get_count)
-
-# Register b2ChainShape in _Box2D:
-_Box2D.b2ChainShape_swigregister(b2ChainShape)
-
-class b2PolygonShape(b2Shape):
-    r"""A convex polygon. It is assumed that the interior of the polygon is to the left of each edge. Polygons have a maximum number of vertices equal to b2_maxPolygonVertices. In most cases you should not need many vertices for a convex polygon."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self, **kwargs):
-        _Box2D.b2PolygonShape_swiginit(self,_Box2D.new_b2PolygonShape())
-        _init_kwargs(self, **kwargs)
-
-
-    Validate = _swig_new_instance_method(_Box2D.b2PolygonShape_Validate)
-    SetCentroid = _swig_new_instance_method(_Box2D.b2PolygonShape_SetCentroid)
-    SetAsBox = _swig_new_instance_method(_Box2D.b2PolygonShape_SetAsBox)
-    centroid = property(_Box2D.b2PolygonShape_centroid_get, _Box2D.b2PolygonShape_centroid_set, doc=r"""centroid : b2Vec2""")
-    vertexCount = property(_Box2D.b2PolygonShape_vertexCount_get, _Box2D.b2PolygonShape_vertexCount_set, doc=r"""vertexCount : int32""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2PolygonShape___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-    __get_vertices = _swig_new_instance_method(_Box2D.b2PolygonShape___get_vertices)
-    __get_normals = _swig_new_instance_method(_Box2D.b2PolygonShape___get_normals)
-
-    def __repr__(self):
-        return "b2PolygonShape(vertices: %s)" % (self.vertices)
-    def __clear_vertices(self):
-        self.vertexCount=0
-        for i in range(0, b2_maxPolygonVertices):
-            self.set_vertex(i, 0, 0)
-    def __set_vertices(self, values):
-        if not values:
-            self.__clear_vertices()
-        else:
-            if len(values) < 2 or len(values) > b2_maxPolygonVertices:
-                raise ValueError('Expected tuple or list of length >= 2 and less than b2_maxPolygonVertices=%d, got length %d.' %
-                                     (b2_maxPolygonVertices, len(values)))
-            for i,value in enumerate(values):
-                if isinstance(value, (tuple, list, b2Vec2)):
-                    if len(value) != 2:
-                        raise ValueError('Expected tuple or list of length 2, got length %d' % len(value))
-                    self.set_vertex(i, *value)
-                else:
-                    raise ValueError('Expected tuple, list, or b2Vec2, got %s' % type(value))
-                self.vertexCount=i+1 # follow along in case of an exception to indicate valid number set
-
-            self.__set_vertices_internal() # calculates normals, centroid, etc.
-
-    def __iter__(self):
-        """
-        Iterates over the vertices in the polygon
-        """
-        for v in self.vertices:
-            yield v
-
-    def __IsValid(self):
-        return b2CheckPolygon(self)
-
-    valid = property(__IsValid, None, doc="Checks the polygon to see if it can be properly created. Raises ValueError for invalid shapes.")
-    vertices = property(__get_vertices, __set_vertices, doc="All of the vertices as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]")
-    normals = property(__get_normals, None, doc="All of the normals as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]")
-    box = property(None, lambda self, value: self.SetAsBox(*value), doc="Property replacement for running SetAsBox (Write-only)")
-
-    __get_vertex = _swig_new_instance_method(_Box2D.b2PolygonShape___get_vertex)
-    __get_normal = _swig_new_instance_method(_Box2D.b2PolygonShape___get_normal)
-    set_vertex = _swig_new_instance_method(_Box2D.b2PolygonShape_set_vertex)
-    __set_vertices_internal = _swig_new_instance_method(_Box2D.b2PolygonShape___set_vertices_internal)
-    __swig_destroy__ = _Box2D.delete_b2PolygonShape
-
-# Register b2PolygonShape in _Box2D:
-_Box2D.b2PolygonShape_swigregister(b2PolygonShape)
-
-b2_nullNode = _Box2D.b2_nullNode
-
-class b2TreeNode(object):
-    r"""Proxy of C++ b2TreeNode class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    IsLeaf = _swig_new_instance_method(_Box2D.b2TreeNode_IsLeaf)
-    aabb = property(_Box2D.b2TreeNode_aabb_get, _Box2D.b2TreeNode_aabb_set, doc=r"""aabb : b2AABB""")
-    child1 = property(_Box2D.b2TreeNode_child1_get, _Box2D.b2TreeNode_child1_set, doc=r"""child1 : int32""")
-    child2 = property(_Box2D.b2TreeNode_child2_get, _Box2D.b2TreeNode_child2_set, doc=r"""child2 : int32""")
-    height = property(_Box2D.b2TreeNode_height_get, _Box2D.b2TreeNode_height_set, doc=r"""height : int32""")
-
-    def __init__(self):
-        r"""__init__(b2TreeNode self) -> b2TreeNode"""
-        _Box2D.b2TreeNode_swiginit(self, _Box2D.new_b2TreeNode())
-    __swig_destroy__ = _Box2D.delete_b2TreeNode
-
-# Register b2TreeNode in _Box2D:
-_Box2D.b2TreeNode_swigregister(b2TreeNode)
-
-class b2Pair(object):
-    r"""Proxy of C++ b2Pair class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    proxyIdA = property(_Box2D.b2Pair_proxyIdA_get, _Box2D.b2Pair_proxyIdA_set, doc=r"""proxyIdA : int32""")
-    proxyIdB = property(_Box2D.b2Pair_proxyIdB_get, _Box2D.b2Pair_proxyIdB_set, doc=r"""proxyIdB : int32""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2Pair___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __init__(self, **kwargs):
-        _Box2D.b2Pair_swiginit(self,_Box2D.new_b2Pair())
-        _init_kwargs(self, **kwargs)
-
-
-    __swig_destroy__ = _Box2D.delete_b2Pair
-
-# Register b2Pair in _Box2D:
-_Box2D.b2Pair_swigregister(b2Pair)
-
-class b2BroadPhase(object):
-    r"""The broad-phase is used for computing pairs and performing volume queries and ray casts. This broad-phase does not persist pairs. Instead, this reports potentially new pairs. It is up to the client to consume the new pairs and to track subsequent overlap."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    e_nullProxy = _Box2D.b2BroadPhase_e_nullProxy
-    
-
-    def __init__(self):
-        r"""
-        __init__(b2BroadPhase self) -> b2BroadPhase
-        The broad-phase is used for computing pairs and performing volume queries and ray casts. This broad-phase does not persist pairs. Instead, this reports potentially new pairs. It is up to the client to consume the new pairs and to track subsequent overlap.
-        """
-        _Box2D.b2BroadPhase_swiginit(self, _Box2D.new_b2BroadPhase())
-    __swig_destroy__ = _Box2D.delete_b2BroadPhase
-    MoveProxy = _swig_new_instance_method(_Box2D.b2BroadPhase_MoveProxy)
-    TouchProxy = _swig_new_instance_method(_Box2D.b2BroadPhase_TouchProxy)
-    GetFatAABB = _swig_new_instance_method(_Box2D.b2BroadPhase_GetFatAABB)
-    TestOverlap = _swig_new_instance_method(_Box2D.b2BroadPhase_TestOverlap)
-    __GetProxyCount = _swig_new_instance_method(_Box2D.b2BroadPhase___GetProxyCount)
-    __GetTreeHeight = _swig_new_instance_method(_Box2D.b2BroadPhase___GetTreeHeight)
-    __GetTreeBalance = _swig_new_instance_method(_Box2D.b2BroadPhase___GetTreeBalance)
-    __GetTreeQuality = _swig_new_instance_method(_Box2D.b2BroadPhase___GetTreeQuality)
-    ShiftOrigin = _swig_new_instance_method(_Box2D.b2BroadPhase_ShiftOrigin)
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2BroadPhase___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    proxyCount=property(__GetProxyCount, None)
-    treeHeight=property(__GetTreeHeight, None)
-    treeBalance=property(__GetTreeBalance, None)
-    treeQuality=property(__GetTreeQuality, None)
-
-
-# Register b2BroadPhase in _Box2D:
-_Box2D.b2BroadPhase_swigregister(b2BroadPhase)
-
-b2PairLessThan = _Box2D.b2PairLessThan
-class b2DistanceProxy(object):
-    r"""A distance proxy is used by the GJK algorithm. It encapsulates any shape."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-
-    def __init__(self, shape, index=0):
-        _Box2D.b2DistanceProxy_swiginit(self,_Box2D.new_b2DistanceProxy())
-        self.Set(shape, index)
-
-
-    Set = _swig_new_instance_method(_Box2D.b2DistanceProxy_Set)
-    GetSupport = _swig_new_instance_method(_Box2D.b2DistanceProxy_GetSupport)
-    GetSupportVertex = _swig_new_instance_method(_Box2D.b2DistanceProxy_GetSupportVertex)
-    __get_vertex_count = _swig_new_instance_method(_Box2D.b2DistanceProxy___get_vertex_count)
-    __get_vertex = _swig_new_instance_method(_Box2D.b2DistanceProxy___get_vertex)
-    m_buffer = property(_Box2D.b2DistanceProxy_m_buffer_get, _Box2D.b2DistanceProxy_m_buffer_set, doc=r"""m_buffer : a(2).b2Vec2""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2DistanceProxy___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __get_vertices(self):
-        """Returns all of the vertices as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]"""
-        return [ (self.__get_vertex(i).x, self.__get_vertex(i).y )
-                         for i in range(0, self.__get_vertex_count())]
-    vertices = property(__get_vertices, None)
-
-    __swig_destroy__ = _Box2D.delete_b2DistanceProxy
-
-# Register b2DistanceProxy in _Box2D:
-_Box2D.b2DistanceProxy_swigregister(b2DistanceProxy)
-
-class b2DistanceInput(object):
-    r"""Input for b2Distance. You have to option to use the shape radii in the computation. Even"""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    proxyA = property(_Box2D.b2DistanceInput_proxyA_get, _Box2D.b2DistanceInput_proxyA_set, doc=r"""proxyA : b2DistanceProxy""")
-    proxyB = property(_Box2D.b2DistanceInput_proxyB_get, _Box2D.b2DistanceInput_proxyB_set, doc=r"""proxyB : b2DistanceProxy""")
-    transformA = property(_Box2D.b2DistanceInput_transformA_get, _Box2D.b2DistanceInput_transformA_set, doc=r"""transformA : b2Transform""")
-    transformB = property(_Box2D.b2DistanceInput_transformB_get, _Box2D.b2DistanceInput_transformB_set, doc=r"""transformB : b2Transform""")
-    useRadii = property(_Box2D.b2DistanceInput_useRadii_get, _Box2D.b2DistanceInput_useRadii_set, doc=r"""useRadii : bool""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2DistanceInput___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __init__(self, **kwargs):
-        _Box2D.b2DistanceInput_swiginit(self,_Box2D.new_b2DistanceInput())
-        _init_kwargs(self, **kwargs)
-
-
-    __swig_destroy__ = _Box2D.delete_b2DistanceInput
-
-# Register b2DistanceInput in _Box2D:
-_Box2D.b2DistanceInput_swigregister(b2DistanceInput)
-
-class b2DistanceOutput(object):
-    r"""Output for b2Distance."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    pointA = property(_Box2D.b2DistanceOutput_pointA_get, _Box2D.b2DistanceOutput_pointA_set, doc=r"""pointA : b2Vec2""")
-    pointB = property(_Box2D.b2DistanceOutput_pointB_get, _Box2D.b2DistanceOutput_pointB_set, doc=r"""pointB : b2Vec2""")
-    distance = property(_Box2D.b2DistanceOutput_distance_get, _Box2D.b2DistanceOutput_distance_set, doc=r"""distance : float32""")
-    iterations = property(_Box2D.b2DistanceOutput_iterations_get, _Box2D.b2DistanceOutput_iterations_set, doc=r"""iterations : int32""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2DistanceOutput___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __init__(self, **kwargs):
-        _Box2D.b2DistanceOutput_swiginit(self,_Box2D.new_b2DistanceOutput())
-        _init_kwargs(self, **kwargs)
-
-
-    __swig_destroy__ = _Box2D.delete_b2DistanceOutput
-
-# Register b2DistanceOutput in _Box2D:
-_Box2D.b2DistanceOutput_swigregister(b2DistanceOutput)
-
-class b2TOIInput(object):
-    r"""Input parameters for b2TimeOfImpact."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    proxyA = property(_Box2D.b2TOIInput_proxyA_get, _Box2D.b2TOIInput_proxyA_set, doc=r"""proxyA : b2DistanceProxy""")
-    proxyB = property(_Box2D.b2TOIInput_proxyB_get, _Box2D.b2TOIInput_proxyB_set, doc=r"""proxyB : b2DistanceProxy""")
-    sweepA = property(_Box2D.b2TOIInput_sweepA_get, _Box2D.b2TOIInput_sweepA_set, doc=r"""sweepA : b2Sweep""")
-    sweepB = property(_Box2D.b2TOIInput_sweepB_get, _Box2D.b2TOIInput_sweepB_set, doc=r"""sweepB : b2Sweep""")
-    tMax = property(_Box2D.b2TOIInput_tMax_get, _Box2D.b2TOIInput_tMax_set, doc=r"""tMax : float32""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2TOIInput___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __init__(self, **kwargs):
-        _Box2D.b2TOIInput_swiginit(self,_Box2D.new_b2TOIInput())
-        _init_kwargs(self, **kwargs)
-
-
-    __swig_destroy__ = _Box2D.delete_b2TOIInput
-
-# Register b2TOIInput in _Box2D:
-_Box2D.b2TOIInput_swigregister(b2TOIInput)
-
-class b2TOIOutput(object):
-    r"""Proxy of C++ b2TOIOutput class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    e_unknown = _Box2D.b2TOIOutput_e_unknown
-    
-    e_failed = _Box2D.b2TOIOutput_e_failed
-    
-    e_overlapped = _Box2D.b2TOIOutput_e_overlapped
-    
-    e_touching = _Box2D.b2TOIOutput_e_touching
-    
-    e_separated = _Box2D.b2TOIOutput_e_separated
-    
-    state = property(_Box2D.b2TOIOutput_state_get, _Box2D.b2TOIOutput_state_set, doc=r"""state : b2TOIOutput::State""")
-    t = property(_Box2D.b2TOIOutput_t_get, _Box2D.b2TOIOutput_t_set, doc=r"""t : float32""")
-
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2TOIOutput___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __init__(self):
-        r"""__init__(b2TOIOutput self) -> b2TOIOutput"""
-        _Box2D.b2TOIOutput_swiginit(self, _Box2D.new_b2TOIOutput())
-    __swig_destroy__ = _Box2D.delete_b2TOIOutput
-
-# Register b2TOIOutput in _Box2D:
-_Box2D.b2TOIOutput_swigregister(b2TOIOutput)
 
 b2_staticBody = _Box2D.b2_staticBody
 
@@ -3538,213 +2896,906 @@ class b2Fixture(object):
 # Register b2Fixture in _Box2D:
 _Box2D.b2Fixture_swigregister(b2Fixture)
 
-class b2DestructionListener(object):
-    r"""Joints and fixtures are destroyed when their associated body is destroyed. Implement this listener so that you may nullify references to these joints and shapes."""
+class b2ParticleContact(object):
+    r"""Proxy of C++ b2ParticleContact class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
-    __swig_destroy__ = _Box2D.delete_b2DestructionListener
-    SayGoodbye = _swig_new_instance_method(_Box2D.b2DestructionListener_SayGoodbye)
+    SetIndices = _swig_new_instance_method(_Box2D.b2ParticleContact_SetIndices)
+    SetWeight = _swig_new_instance_method(_Box2D.b2ParticleContact_SetWeight)
+    SetNormal = _swig_new_instance_method(_Box2D.b2ParticleContact_SetNormal)
+    SetFlags = _swig_new_instance_method(_Box2D.b2ParticleContact_SetFlags)
+    GetIndexA = _swig_new_instance_method(_Box2D.b2ParticleContact_GetIndexA)
+    GetIndexB = _swig_new_instance_method(_Box2D.b2ParticleContact_GetIndexB)
+    GetWeight = _swig_new_instance_method(_Box2D.b2ParticleContact_GetWeight)
+    GetNormal = _swig_new_instance_method(_Box2D.b2ParticleContact_GetNormal)
+    GetFlags = _swig_new_instance_method(_Box2D.b2ParticleContact_GetFlags)
+    __eq__ = _swig_new_instance_method(_Box2D.b2ParticleContact___eq__)
+    __ne__ = _swig_new_instance_method(_Box2D.b2ParticleContact___ne__)
+    ApproximatelyEqual = _swig_new_instance_method(_Box2D.b2ParticleContact_ApproximatelyEqual)
 
-    __dir__ = _dir_filter
+    def __init__(self):
+        r"""__init__(b2ParticleContact self) -> b2ParticleContact"""
+        _Box2D.b2ParticleContact_swiginit(self, _Box2D.new_b2ParticleContact())
+    __swig_destroy__ = _Box2D.delete_b2ParticleContact
 
-    __hash__ = _swig_new_instance_method(_Box2D.b2DestructionListener___hash__)
+# Register b2ParticleContact in _Box2D:
+_Box2D.b2ParticleContact_swigregister(b2ParticleContact)
 
-    def __repr__(self):
-        return _format_repr(self) 
+class b2ParticleBodyContact(object):
+    r"""Proxy of C++ b2ParticleBodyContact class."""
 
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    index = property(_Box2D.b2ParticleBodyContact_index_get, _Box2D.b2ParticleBodyContact_index_set, doc=r"""index : int32""")
+    body = property(_Box2D.b2ParticleBodyContact_body_get, _Box2D.b2ParticleBodyContact_body_set, doc=r"""body : p.b2Body""")
+    fixture = property(_Box2D.b2ParticleBodyContact_fixture_get, _Box2D.b2ParticleBodyContact_fixture_set, doc=r"""fixture : p.b2Fixture""")
+    weight = property(_Box2D.b2ParticleBodyContact_weight_get, _Box2D.b2ParticleBodyContact_weight_set, doc=r"""weight : float32""")
+    normal = property(_Box2D.b2ParticleBodyContact_normal_get, _Box2D.b2ParticleBodyContact_normal_set, doc=r"""normal : b2Vec2""")
+    mass = property(_Box2D.b2ParticleBodyContact_mass_get, _Box2D.b2ParticleBodyContact_mass_set, doc=r"""mass : float32""")
 
-    def __init__(self, **kwargs):
-        if self.__class__ == b2DestructionListener:
+    def __init__(self):
+        r"""__init__(b2ParticleBodyContact self) -> b2ParticleBodyContact"""
+        _Box2D.b2ParticleBodyContact_swiginit(self, _Box2D.new_b2ParticleBodyContact())
+    __swig_destroy__ = _Box2D.delete_b2ParticleBodyContact
+
+# Register b2ParticleBodyContact in _Box2D:
+_Box2D.b2ParticleBodyContact_swigregister(b2ParticleBodyContact)
+
+class b2ParticlePair(object):
+    r"""Proxy of C++ b2ParticlePair class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    indexA = property(_Box2D.b2ParticlePair_indexA_get, _Box2D.b2ParticlePair_indexA_set, doc=r"""indexA : int32""")
+    indexB = property(_Box2D.b2ParticlePair_indexB_get, _Box2D.b2ParticlePair_indexB_set, doc=r"""indexB : int32""")
+    flags = property(_Box2D.b2ParticlePair_flags_get, _Box2D.b2ParticlePair_flags_set, doc=r"""flags : uint32""")
+    strength = property(_Box2D.b2ParticlePair_strength_get, _Box2D.b2ParticlePair_strength_set, doc=r"""strength : float32""")
+    distance = property(_Box2D.b2ParticlePair_distance_get, _Box2D.b2ParticlePair_distance_set, doc=r"""distance : float32""")
+
+    def __init__(self):
+        r"""__init__(b2ParticlePair self) -> b2ParticlePair"""
+        _Box2D.b2ParticlePair_swiginit(self, _Box2D.new_b2ParticlePair())
+    __swig_destroy__ = _Box2D.delete_b2ParticlePair
+
+# Register b2ParticlePair in _Box2D:
+_Box2D.b2ParticlePair_swigregister(b2ParticlePair)
+
+class b2ParticleTriad(object):
+    r"""Proxy of C++ b2ParticleTriad class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    indexA = property(_Box2D.b2ParticleTriad_indexA_get, _Box2D.b2ParticleTriad_indexA_set, doc=r"""indexA : int32""")
+    indexB = property(_Box2D.b2ParticleTriad_indexB_get, _Box2D.b2ParticleTriad_indexB_set, doc=r"""indexB : int32""")
+    indexC = property(_Box2D.b2ParticleTriad_indexC_get, _Box2D.b2ParticleTriad_indexC_set, doc=r"""indexC : int32""")
+    flags = property(_Box2D.b2ParticleTriad_flags_get, _Box2D.b2ParticleTriad_flags_set, doc=r"""flags : uint32""")
+    strength = property(_Box2D.b2ParticleTriad_strength_get, _Box2D.b2ParticleTriad_strength_set, doc=r"""strength : float32""")
+    pa = property(_Box2D.b2ParticleTriad_pa_get, _Box2D.b2ParticleTriad_pa_set, doc=r"""pa : b2Vec2""")
+    pb = property(_Box2D.b2ParticleTriad_pb_get, _Box2D.b2ParticleTriad_pb_set, doc=r"""pb : b2Vec2""")
+    pc = property(_Box2D.b2ParticleTriad_pc_get, _Box2D.b2ParticleTriad_pc_set, doc=r"""pc : b2Vec2""")
+    ka = property(_Box2D.b2ParticleTriad_ka_get, _Box2D.b2ParticleTriad_ka_set, doc=r"""ka : float32""")
+    kb = property(_Box2D.b2ParticleTriad_kb_get, _Box2D.b2ParticleTriad_kb_set, doc=r"""kb : float32""")
+    kc = property(_Box2D.b2ParticleTriad_kc_get, _Box2D.b2ParticleTriad_kc_set, doc=r"""kc : float32""")
+    s = property(_Box2D.b2ParticleTriad_s_get, _Box2D.b2ParticleTriad_s_set, doc=r"""s : float32""")
+
+    def __init__(self):
+        r"""__init__(b2ParticleTriad self) -> b2ParticleTriad"""
+        _Box2D.b2ParticleTriad_swiginit(self, _Box2D.new_b2ParticleTriad())
+    __swig_destroy__ = _Box2D.delete_b2ParticleTriad
+
+# Register b2ParticleTriad in _Box2D:
+_Box2D.b2ParticleTriad_swigregister(b2ParticleTriad)
+
+class b2ParticleSystemDef(object):
+    r"""Proxy of C++ b2ParticleSystemDef class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        r"""__init__(b2ParticleSystemDef self) -> b2ParticleSystemDef"""
+        _Box2D.b2ParticleSystemDef_swiginit(self, _Box2D.new_b2ParticleSystemDef())
+    strictContactCheck = property(_Box2D.b2ParticleSystemDef_strictContactCheck_get, _Box2D.b2ParticleSystemDef_strictContactCheck_set, doc=r"""strictContactCheck : bool""")
+    density = property(_Box2D.b2ParticleSystemDef_density_get, _Box2D.b2ParticleSystemDef_density_set, doc=r"""density : float32""")
+    gravityScale = property(_Box2D.b2ParticleSystemDef_gravityScale_get, _Box2D.b2ParticleSystemDef_gravityScale_set, doc=r"""gravityScale : float32""")
+    radius = property(_Box2D.b2ParticleSystemDef_radius_get, _Box2D.b2ParticleSystemDef_radius_set, doc=r"""radius : float32""")
+    maxCount = property(_Box2D.b2ParticleSystemDef_maxCount_get, _Box2D.b2ParticleSystemDef_maxCount_set, doc=r"""maxCount : int32""")
+    pressureStrength = property(_Box2D.b2ParticleSystemDef_pressureStrength_get, _Box2D.b2ParticleSystemDef_pressureStrength_set, doc=r"""pressureStrength : float32""")
+    dampingStrength = property(_Box2D.b2ParticleSystemDef_dampingStrength_get, _Box2D.b2ParticleSystemDef_dampingStrength_set, doc=r"""dampingStrength : float32""")
+    elasticStrength = property(_Box2D.b2ParticleSystemDef_elasticStrength_get, _Box2D.b2ParticleSystemDef_elasticStrength_set, doc=r"""elasticStrength : float32""")
+    springStrength = property(_Box2D.b2ParticleSystemDef_springStrength_get, _Box2D.b2ParticleSystemDef_springStrength_set, doc=r"""springStrength : float32""")
+    viscousStrength = property(_Box2D.b2ParticleSystemDef_viscousStrength_get, _Box2D.b2ParticleSystemDef_viscousStrength_set, doc=r"""viscousStrength : float32""")
+    surfaceTensionPressureStrength = property(_Box2D.b2ParticleSystemDef_surfaceTensionPressureStrength_get, _Box2D.b2ParticleSystemDef_surfaceTensionPressureStrength_set, doc=r"""surfaceTensionPressureStrength : float32""")
+    surfaceTensionNormalStrength = property(_Box2D.b2ParticleSystemDef_surfaceTensionNormalStrength_get, _Box2D.b2ParticleSystemDef_surfaceTensionNormalStrength_set, doc=r"""surfaceTensionNormalStrength : float32""")
+    repulsiveStrength = property(_Box2D.b2ParticleSystemDef_repulsiveStrength_get, _Box2D.b2ParticleSystemDef_repulsiveStrength_set, doc=r"""repulsiveStrength : float32""")
+    powderStrength = property(_Box2D.b2ParticleSystemDef_powderStrength_get, _Box2D.b2ParticleSystemDef_powderStrength_set, doc=r"""powderStrength : float32""")
+    ejectionStrength = property(_Box2D.b2ParticleSystemDef_ejectionStrength_get, _Box2D.b2ParticleSystemDef_ejectionStrength_set, doc=r"""ejectionStrength : float32""")
+    staticPressureStrength = property(_Box2D.b2ParticleSystemDef_staticPressureStrength_get, _Box2D.b2ParticleSystemDef_staticPressureStrength_set, doc=r"""staticPressureStrength : float32""")
+    staticPressureRelaxation = property(_Box2D.b2ParticleSystemDef_staticPressureRelaxation_get, _Box2D.b2ParticleSystemDef_staticPressureRelaxation_set, doc=r"""staticPressureRelaxation : float32""")
+    staticPressureIterations = property(_Box2D.b2ParticleSystemDef_staticPressureIterations_get, _Box2D.b2ParticleSystemDef_staticPressureIterations_set, doc=r"""staticPressureIterations : int32""")
+    colorMixingStrength = property(_Box2D.b2ParticleSystemDef_colorMixingStrength_get, _Box2D.b2ParticleSystemDef_colorMixingStrength_set, doc=r"""colorMixingStrength : float32""")
+    destroyByAge = property(_Box2D.b2ParticleSystemDef_destroyByAge_get, _Box2D.b2ParticleSystemDef_destroyByAge_set, doc=r"""destroyByAge : bool""")
+    lifetimeGranularity = property(_Box2D.b2ParticleSystemDef_lifetimeGranularity_get, _Box2D.b2ParticleSystemDef_lifetimeGranularity_set, doc=r"""lifetimeGranularity : float32""")
+    __swig_destroy__ = _Box2D.delete_b2ParticleSystemDef
+
+# Register b2ParticleSystemDef in _Box2D:
+_Box2D.b2ParticleSystemDef_swigregister(b2ParticleSystemDef)
+
+class b2ParticleSystem(object):
+    r"""Proxy of C++ b2ParticleSystem class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    CreateParticle = _swig_new_instance_method(_Box2D.b2ParticleSystem_CreateParticle)
+    GetParticleHandleFromIndex = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleHandleFromIndex)
+    DestroyParticle = _swig_new_instance_method(_Box2D.b2ParticleSystem_DestroyParticle)
+    DestroyOldestParticle = _swig_new_instance_method(_Box2D.b2ParticleSystem_DestroyOldestParticle)
+    DestroyParticlesInShape = _swig_new_instance_method(_Box2D.b2ParticleSystem_DestroyParticlesInShape)
+    CreateParticleGroup = _swig_new_instance_method(_Box2D.b2ParticleSystem_CreateParticleGroup)
+    JoinParticleGroups = _swig_new_instance_method(_Box2D.b2ParticleSystem_JoinParticleGroups)
+    SplitParticleGroup = _swig_new_instance_method(_Box2D.b2ParticleSystem_SplitParticleGroup)
+    GetParticleGroupList = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleGroupList)
+    GetParticleGroupCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleGroupCount)
+    GetParticleCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleCount)
+    GetMaxParticleCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetMaxParticleCount)
+    SetMaxParticleCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetMaxParticleCount)
+    GetAllParticleFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetAllParticleFlags)
+    GetAllGroupFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetAllGroupFlags)
+    SetPaused = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetPaused)
+    GetPaused = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPaused)
+    SetDensity = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetDensity)
+    GetDensity = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetDensity)
+    SetGravityScale = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetGravityScale)
+    GetGravityScale = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetGravityScale)
+    SetDamping = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetDamping)
+    GetDamping = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetDamping)
+    SetStaticPressureIterations = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetStaticPressureIterations)
+    GetStaticPressureIterations = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStaticPressureIterations)
+    SetRadius = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetRadius)
+    GetRadius = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetRadius)
+    GetPositionBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPositionBuffer)
+    GetVelocityBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetVelocityBuffer)
+    GetColorBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetColorBuffer)
+    GetGroupBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetGroupBuffer)
+    GetWeightBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetWeightBuffer)
+    GetUserDataBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetUserDataBuffer)
+    GetFlagsBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetFlagsBuffer)
+    SetParticleFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetParticleFlags)
+    GetParticleFlags = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleFlags)
+    SetFlagsBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetFlagsBuffer)
+    SetPositionBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetPositionBuffer)
+    SetVelocityBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetVelocityBuffer)
+    SetColorBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetColorBuffer)
+    SetUserDataBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetUserDataBuffer)
+    GetContacts = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetContacts)
+    GetContactCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetContactCount)
+    GetBodyContacts = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetBodyContacts)
+    GetBodyContactCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetBodyContactCount)
+    GetPairs = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPairs)
+    GetPairCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetPairCount)
+    GetTriads = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetTriads)
+    GetTriadCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetTriadCount)
+    SetStuckThreshold = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetStuckThreshold)
+    GetStuckCandidates = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStuckCandidates)
+    GetStuckCandidateCount = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStuckCandidateCount)
+    ComputeCollisionEnergy = _swig_new_instance_method(_Box2D.b2ParticleSystem_ComputeCollisionEnergy)
+    SetStrictContactCheck = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetStrictContactCheck)
+    GetStrictContactCheck = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetStrictContactCheck)
+    SetParticleLifetime = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetParticleLifetime)
+    GetParticleLifetime = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticleLifetime)
+    SetDestructionByAge = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetDestructionByAge)
+    GetDestructionByAge = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetDestructionByAge)
+    GetExpirationTimeBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetExpirationTimeBuffer)
+    ExpirationTimeToLifetime = _swig_new_instance_method(_Box2D.b2ParticleSystem_ExpirationTimeToLifetime)
+    GetIndexByExpirationTimeBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetIndexByExpirationTimeBuffer)
+    ParticleApplyLinearImpulse = _swig_new_instance_method(_Box2D.b2ParticleSystem_ParticleApplyLinearImpulse)
+    ApplyLinearImpulse = _swig_new_instance_method(_Box2D.b2ParticleSystem_ApplyLinearImpulse)
+    ParticleApplyForce = _swig_new_instance_method(_Box2D.b2ParticleSystem_ParticleApplyForce)
+    ApplyForce = _swig_new_instance_method(_Box2D.b2ParticleSystem_ApplyForce)
+    GetNext = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetNext)
+    QueryAABB = _swig_new_instance_method(_Box2D.b2ParticleSystem_QueryAABB)
+    QueryShapeAABB = _swig_new_instance_method(_Box2D.b2ParticleSystem_QueryShapeAABB)
+    RayCast = _swig_new_instance_method(_Box2D.b2ParticleSystem_RayCast)
+    ComputeAABB = _swig_new_instance_method(_Box2D.b2ParticleSystem_ComputeAABB)
+    b2_bufferTooSmall = _Box2D.b2ParticleSystem_b2_bufferTooSmall
+    
+    b2_particleIndexOutOfBounds = _Box2D.b2ParticleSystem_b2_particleIndexOutOfBounds
+    
+    b2_numErrors = _Box2D.b2ParticleSystem_b2_numErrors
+    
+    b2_noExceptions = _Box2D.b2ParticleSystem_b2_noExceptions
+    
+    SetParticleVelocity = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetParticleVelocity)
+    GetParticlePositionX = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticlePositionX)
+    GetParticlePositionY = _swig_new_instance_method(_Box2D.b2ParticleSystem_GetParticlePositionY)
+    CopyPositionBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_CopyPositionBuffer)
+    CopyColorBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_CopyColorBuffer)
+    CopyWeightBuffer = _swig_new_instance_method(_Box2D.b2ParticleSystem_CopyWeightBuffer)
+    m_colorMixingTimer = property(_Box2D.b2ParticleSystem_m_colorMixingTimer_get, _Box2D.b2ParticleSystem_m_colorMixingTimer_set, doc=r"""m_colorMixingTimer : float32""")
+    SetColorMixingTimer = _swig_new_instance_method(_Box2D.b2ParticleSystem_SetColorMixingTimer)
+
+# Register b2ParticleSystem in _Box2D:
+_Box2D.b2ParticleSystem_swigregister(b2ParticleSystem)
+
+class b2FixtureParticleQueryCallback(b2QueryCallback):
+    r"""Proxy of C++ b2FixtureParticleQueryCallback class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+
+    def __init__(self, system):
+        r"""__init__(b2FixtureParticleQueryCallback self, b2ParticleSystem system) -> b2FixtureParticleQueryCallback"""
+        if self.__class__ == b2FixtureParticleQueryCallback:
             _self = None
         else:
             _self = self
-        _Box2D.b2DestructionListener_swiginit(self,_Box2D.new_b2DestructionListener(_self, ))
-        _init_kwargs(self, **kwargs)
-
-
+        _Box2D.b2FixtureParticleQueryCallback_swiginit(self, _Box2D.new_b2FixtureParticleQueryCallback(_self, system))
+    ShouldQueryParticleSystem = _swig_new_instance_method(_Box2D.b2FixtureParticleQueryCallback_ShouldQueryParticleSystem)
+    ReportFixture = _swig_new_instance_method(_Box2D.b2FixtureParticleQueryCallback_ReportFixture)
+    ReportFixtureAndParticle = _swig_new_instance_method(_Box2D.b2FixtureParticleQueryCallback_ReportFixtureAndParticle)
+    __swig_destroy__ = _Box2D.delete_b2FixtureParticleQueryCallback
     def __disown__(self):
         self.this.disown()
-        _Box2D.disown_b2DestructionListener(self)
+        _Box2D.disown_b2FixtureParticleQueryCallback(self)
         return weakref.proxy(self)
 
-# Register b2DestructionListener in _Box2D:
-_Box2D.b2DestructionListener_swigregister(b2DestructionListener)
+# Register b2FixtureParticleQueryCallback in _Box2D:
+_Box2D.b2FixtureParticleQueryCallback_swigregister(b2FixtureParticleQueryCallback)
 
-class b2ContactFilter(object):
-    r"""Implement this class to provide collision filtering. In other words, you can implement this class if you want finer control over contact creation."""
+class b2ParticlesInShapeQueryCallback(b2QueryCallback):
+    r"""Proxy of C++ b2ParticlesInShapeQueryCallback class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
-    __swig_destroy__ = _Box2D.delete_b2ContactFilter
-    ShouldCollide = _swig_new_instance_method(_Box2D.b2ContactFilter_ShouldCollide)
 
-    __dir__ = _dir_filter
-
-    __hash__ = _swig_new_instance_method(_Box2D.b2ContactFilter___hash__)
-
-    def __repr__(self):
-        return _format_repr(self) 
-
-
-    def __init__(self, **kwargs):
-        if self.__class__ == b2ContactFilter:
+    def __init__(self, system, shape, xf):
+        r"""__init__(b2ParticlesInShapeQueryCallback self, b2ParticleSystem system, b2Shape shape, b2Transform xf) -> b2ParticlesInShapeQueryCallback"""
+        if self.__class__ == b2ParticlesInShapeQueryCallback:
             _self = None
         else:
             _self = self
-        _Box2D.b2ContactFilter_swiginit(self,_Box2D.new_b2ContactFilter(_self, ))
-        _init_kwargs(self, **kwargs)
-
-
+        _Box2D.b2ParticlesInShapeQueryCallback_swiginit(self, _Box2D.new_b2ParticlesInShapeQueryCallback(_self, system, shape, xf))
+    UpdateShapeTransform = _swig_new_instance_method(_Box2D.b2ParticlesInShapeQueryCallback_UpdateShapeTransform)
+    ReportParticle = _swig_new_instance_method(_Box2D.b2ParticlesInShapeQueryCallback_ReportParticle)
+    __swig_destroy__ = _Box2D.delete_b2ParticlesInShapeQueryCallback
     def __disown__(self):
         self.this.disown()
-        _Box2D.disown_b2ContactFilter(self)
+        _Box2D.disown_b2ParticlesInShapeQueryCallback(self)
         return weakref.proxy(self)
 
-# Register b2ContactFilter in _Box2D:
-_Box2D.b2ContactFilter_swigregister(b2ContactFilter)
+# Register b2ParticlesInShapeQueryCallback in _Box2D:
+_Box2D.b2ParticlesInShapeQueryCallback_swigregister(b2ParticlesInShapeQueryCallback)
 
-class b2ContactImpulse(object):
-    r"""Contact impulses for reporting. Impulses are used instead of forces because sub-step forces may approach infinity for rigid body collisions. These match up one-to-one with the contact points in  b2Manifold."""
+class b2VoronoiDiagram(object):
+    r"""Proxy of C++ b2VoronoiDiagram class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
-    count = property(_Box2D.b2ContactImpulse_count_get, _Box2D.b2ContactImpulse_count_set, doc=r"""count : int32""")
 
-    __dir__ = _dir_filter
+    def __init__(self, allocator, generatorCapacity):
+        r"""__init__(b2VoronoiDiagram self, b2StackAllocator * allocator, int32 generatorCapacity) -> b2VoronoiDiagram"""
+        _Box2D.b2VoronoiDiagram_swiginit(self, _Box2D.new_b2VoronoiDiagram(allocator, generatorCapacity))
+    __swig_destroy__ = _Box2D.delete_b2VoronoiDiagram
+    AddGenerator = _swig_new_instance_method(_Box2D.b2VoronoiDiagram_AddGenerator)
+    Generate = _swig_new_instance_method(_Box2D.b2VoronoiDiagram_Generate)
+    GetNodes = _swig_new_instance_method(_Box2D.b2VoronoiDiagram_GetNodes)
 
-    __hash__ = _swig_new_instance_method(_Box2D.b2ContactImpulse___hash__)
+# Register b2VoronoiDiagram in _Box2D:
+_Box2D.b2VoronoiDiagram_swigregister(b2VoronoiDiagram)
+b2_stackSize = b2Globals.b2_stackSize
+b2_maxStackEntries = b2Globals.b2_maxStackEntries
 
-    def __repr__(self):
-        return _format_repr(self) 
+class b2RopeDef(object):
+    r"""Proxy of C++ b2RopeDef class."""
 
-    __get_normal_impulses = _swig_new_instance_method(_Box2D.b2ContactImpulse___get_normal_impulses)
-    __get_tangent_impulses = _swig_new_instance_method(_Box2D.b2ContactImpulse___get_tangent_impulses)
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
 
-    normalImpulses = property(__get_normal_impulses, None)
-    tangentImpulses = property(__get_tangent_impulses, None)
+    def __init__(self):
+        r"""__init__(b2RopeDef self) -> b2RopeDef"""
+        _Box2D.b2RopeDef_swiginit(self, _Box2D.new_b2RopeDef())
+    vertices = property(_Box2D.b2RopeDef_vertices_get, _Box2D.b2RopeDef_vertices_set, doc=r"""vertices : p.b2Vec2""")
+    count = property(_Box2D.b2RopeDef_count_get, _Box2D.b2RopeDef_count_set, doc=r"""count : int32""")
+    masses = property(_Box2D.b2RopeDef_masses_get, _Box2D.b2RopeDef_masses_set, doc=r"""masses : p.float32""")
+    gravity = property(_Box2D.b2RopeDef_gravity_get, _Box2D.b2RopeDef_gravity_set, doc=r"""gravity : b2Vec2""")
+    damping = property(_Box2D.b2RopeDef_damping_get, _Box2D.b2RopeDef_damping_set, doc=r"""damping : float32""")
+    k2 = property(_Box2D.b2RopeDef_k2_get, _Box2D.b2RopeDef_k2_set, doc=r"""k2 : float32""")
+    k3 = property(_Box2D.b2RopeDef_k3_get, _Box2D.b2RopeDef_k3_set, doc=r"""k3 : float32""")
+    __swig_destroy__ = _Box2D.delete_b2RopeDef
 
+# Register b2RopeDef in _Box2D:
+_Box2D.b2RopeDef_swigregister(b2RopeDef)
+
+class b2Rope(object):
+    r"""Proxy of C++ b2Rope class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        r"""__init__(b2Rope self) -> b2Rope"""
+        _Box2D.b2Rope_swiginit(self, _Box2D.new_b2Rope())
+    __swig_destroy__ = _Box2D.delete_b2Rope
+    Initialize = _swig_new_instance_method(_Box2D.b2Rope_Initialize)
+    Step = _swig_new_instance_method(_Box2D.b2Rope_Step)
+    GetVertexCount = _swig_new_instance_method(_Box2D.b2Rope_GetVertexCount)
+    GetVertices = _swig_new_instance_method(_Box2D.b2Rope_GetVertices)
+    Draw = _swig_new_instance_method(_Box2D.b2Rope_Draw)
+    SetAngle = _swig_new_instance_method(_Box2D.b2Rope_SetAngle)
+
+
+
+# Register b2Rope in _Box2D:
+_Box2D.b2Rope_swigregister(b2Rope)
+
+class b2Stat(object):
+    r"""Proxy of C++ b2Stat class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        r"""__init__(b2Stat self) -> b2Stat"""
+        _Box2D.b2Stat_swiginit(self, _Box2D.new_b2Stat())
+    Record = _swig_new_instance_method(_Box2D.b2Stat_Record)
+    GetCount = _swig_new_instance_method(_Box2D.b2Stat_GetCount)
+    GetMean = _swig_new_instance_method(_Box2D.b2Stat_GetMean)
+    GetMin = _swig_new_instance_method(_Box2D.b2Stat_GetMin)
+    GetMax = _swig_new_instance_method(_Box2D.b2Stat_GetMax)
+    Clear = _swig_new_instance_method(_Box2D.b2Stat_Clear)
+    __swig_destroy__ = _Box2D.delete_b2Stat
+
+# Register b2Stat in _Box2D:
+_Box2D.b2Stat_swigregister(b2Stat)
+
+class b2CircleShape(b2Shape):
+    r"""A circle shape."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
 
     def __init__(self, **kwargs):
-        _Box2D.b2ContactImpulse_swiginit(self,_Box2D.new_b2ContactImpulse())
+        _Box2D.b2CircleShape_swiginit(self,_Box2D.new_b2CircleShape())
         _init_kwargs(self, **kwargs)
 
 
-    __swig_destroy__ = _Box2D.delete_b2ContactImpulse
-
-# Register b2ContactImpulse in _Box2D:
-_Box2D.b2ContactImpulse_swigregister(b2ContactImpulse)
-
-class b2ContactListener(object):
-    r"""
-    Implement this class to get contact information. You can use these results for things like sounds and game logic. You can also get contact results by traversing the contact lists after the time step. However, you might miss some contacts because continuous physics leads to sub-stepping. Additionally you may receive multiple callbacks for the same contact in a single time step. You should strive to make your callbacks efficient because there may be many callbacks per time step. 
-    WARNING: 
-    You cannot create/destroy Box2D entities inside these callbacks.
-    """
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    __swig_destroy__ = _Box2D.delete_b2ContactListener
-    BeginContact = _swig_new_instance_method(_Box2D.b2ContactListener_BeginContact)
-    EndContact = _swig_new_instance_method(_Box2D.b2ContactListener_EndContact)
-    PreSolve = _swig_new_instance_method(_Box2D.b2ContactListener_PreSolve)
-    PostSolve = _swig_new_instance_method(_Box2D.b2ContactListener_PostSolve)
+    SetPosition = _swig_new_instance_method(_Box2D.b2CircleShape_SetPosition)
+    GetPositionX = _swig_new_instance_method(_Box2D.b2CircleShape_GetPositionX)
+    GetPositionY = _swig_new_instance_method(_Box2D.b2CircleShape_GetPositionY)
+    pos = property(_Box2D.b2CircleShape_pos_get, _Box2D.b2CircleShape_pos_set, doc=r"""pos : b2Vec2""")
 
     __dir__ = _dir_filter
 
-    __hash__ = _swig_new_instance_method(_Box2D.b2ContactListener___hash__)
+    __hash__ = _swig_new_instance_method(_Box2D.b2CircleShape___hash__)
 
     def __repr__(self):
         return _format_repr(self) 
 
 
+
+    __swig_destroy__ = _Box2D.delete_b2CircleShape
+
+# Register b2CircleShape in _Box2D:
+_Box2D.b2CircleShape_swigregister(b2CircleShape)
+
+class b2EdgeShape(b2Shape):
+    r"""A line segment (edge) shape. These can be connected in chains or loops to other edge shapes. The connectivity information is used to ensure correct contact normals."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+
     def __init__(self, **kwargs):
-        if self.__class__ == b2ContactListener:
-            _self = None
+        _Box2D.b2EdgeShape_swiginit(self,_Box2D.new_b2EdgeShape())
+        _init_kwargs(self, **kwargs)
+
+
+    __Set = _swig_new_instance_method(_Box2D.b2EdgeShape___Set)
+    vertex1 = property(_Box2D.b2EdgeShape_vertex1_get, _Box2D.b2EdgeShape_vertex1_set, doc=r"""vertex1 : b2Vec2""")
+    vertex2 = property(_Box2D.b2EdgeShape_vertex2_get, _Box2D.b2EdgeShape_vertex2_set, doc=r"""vertex2 : b2Vec2""")
+    vertex0 = property(_Box2D.b2EdgeShape_vertex0_get, _Box2D.b2EdgeShape_vertex0_set, doc=r"""vertex0 : b2Vec2""")
+    vertex3 = property(_Box2D.b2EdgeShape_vertex3_get, _Box2D.b2EdgeShape_vertex3_set, doc=r"""vertex3 : b2Vec2""")
+    hasVertex0 = property(_Box2D.b2EdgeShape_hasVertex0_get, _Box2D.b2EdgeShape_hasVertex0_set, doc=r"""hasVertex0 : bool""")
+    hasVertex3 = property(_Box2D.b2EdgeShape_hasVertex3_get, _Box2D.b2EdgeShape_hasVertex3_set, doc=r"""hasVertex3 : bool""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2EdgeShape___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __repr__(self):
+        return "b2EdgeShape(vertices: %s)" % (self.vertices)
+
+    @property
+    def all_vertices(self):
+        """Returns all of the vertices as a list of tuples [ (x0,y0), (x1,y1), (x2,y2) (x3,y3) ]
+        Note that the validity of vertices 0 and 4 depend on whether or not
+        hasVertex0 and hasVertex3 are set.
+        """
+        return [tuple(self.vertex0), tuple(self.vertex1), tuple(self.vertex2), tuple(self.vertex3)]
+
+    def __get_vertices(self):
+        """Returns the basic vertices as a list of tuples [ (x1,y1), (x2,y2) ]
+        To include the supporting vertices, see 'all_vertices'
+
+        If you want to set vertex3 but not vertex0, pass in None for vertex0.
+        """
+        return [tuple(self.vertex1), tuple(self.vertex2)]
+
+    def __set_vertices(self, vertices):
+        if len(vertices)==2:
+            self.vertex1, self.vertex2=vertices
+            self.hasVertex0=False
+            self.hasVertex3=False
+        elif len(vertices)==3:
+            self.vertex0, self.vertex1, self.vertex2=vertices
+            self.hasVertex0=(vertices[0] != None)
+            self.hasVertex3=False
+        elif len(vertices)==4:
+            self.vertex0, self.vertex1, self.vertex2, self.vertex3=vertices
+            self.hasVertex0=(vertices[0] != None)
+            self.hasVertex3=True
         else:
-            _self = self
-        _Box2D.b2ContactListener_swiginit(self,_Box2D.new_b2ContactListener(_self, ))
-        _init_kwargs(self, **kwargs)
+            raise ValueError('Expected from 2 to 4 vertices.')
 
+    @property
+    def vertexCount(self):
+        """
+        Returns the number of valid vertices (as in, it counts whether or not 
+        hasVertex0 or hasVertex3 are set)
+        """
+        if self.hasVertex0 and self.hasVertex3:
+            return 4
+        elif self.hasVertex0 or self.hasVertex3:
+            return 3
+        else:
+            return 2
 
-    def __disown__(self):
-        self.this.disown()
-        _Box2D.disown_b2ContactListener(self)
-        return weakref.proxy(self)
+    def __iter__(self):
+        """
+        Iterates over the vertices in the Edge
+        """
+        for v in self.vertices:
+            yield v
 
-# Register b2ContactListener in _Box2D:
-_Box2D.b2ContactListener_swigregister(b2ContactListener)
+    vertices=property(__get_vertices, __set_vertices)
 
-class b2QueryCallback(object):
-    r"""Callback class for AABB queries. See b2World::Query"""
+    __swig_destroy__ = _Box2D.delete_b2EdgeShape
+
+# Register b2EdgeShape in _Box2D:
+_Box2D.b2EdgeShape_swigregister(b2EdgeShape)
+
+class b2ChainShape(b2Shape):
+    r"""A loop shape is a free form sequence of line segments that form a circular list. The loop may cross upon itself, but this is not recommended for smooth collision. The loop has double sided collision, so you can use inside and outside collision. Therefore, you may use any winding order. Since there may be many vertices, they are allocated using b2Alloc."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
-    __swig_destroy__ = _Box2D.delete_b2QueryCallback
-    ReportFixture = _swig_new_instance_method(_Box2D.b2QueryCallback_ReportFixture)
-    ReportParticle = _swig_new_instance_method(_Box2D.b2QueryCallback_ReportParticle)
-    ShouldQueryParticleSystem = _swig_new_instance_method(_Box2D.b2QueryCallback_ShouldQueryParticleSystem)
+
+    def __init__(self, **kwargs):
+        _Box2D.b2ChainShape_swiginit(self,_Box2D.new_b2ChainShape())
+        _init_kwargs(self, **kwargs)
+
+
+    __swig_destroy__ = _Box2D.delete_b2ChainShape
+    CreateLoop = _swig_new_instance_method(_Box2D.b2ChainShape_CreateLoop)
+    CreateChain = _swig_new_instance_method(_Box2D.b2ChainShape_CreateChain)
+    SetPrevVertex = _swig_new_instance_method(_Box2D.b2ChainShape_SetPrevVertex)
+    SetNextVertex = _swig_new_instance_method(_Box2D.b2ChainShape_SetNextVertex)
+    __GetChildEdge = _swig_new_instance_method(_Box2D.b2ChainShape___GetChildEdge)
+    m_prevVertex = property(_Box2D.b2ChainShape_m_prevVertex_get, _Box2D.b2ChainShape_m_prevVertex_set, doc=r"""m_prevVertex : b2Vec2""")
+    m_nextVertex = property(_Box2D.b2ChainShape_m_nextVertex_get, _Box2D.b2ChainShape_m_nextVertex_set, doc=r"""m_nextVertex : b2Vec2""")
+    m_hasPrevVertex = property(_Box2D.b2ChainShape_m_hasPrevVertex_get, _Box2D.b2ChainShape_m_hasPrevVertex_set, doc=r"""m_hasPrevVertex : bool""")
+    m_hasNextVertex = property(_Box2D.b2ChainShape_m_hasNextVertex_get, _Box2D.b2ChainShape_m_hasNextVertex_set, doc=r"""m_hasNextVertex : bool""")
 
     __dir__ = _dir_filter
 
-    __hash__ = _swig_new_instance_method(_Box2D.b2QueryCallback___hash__)
+    __hash__ = _swig_new_instance_method(_Box2D.b2ChainShape___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+    __get_vertices = _swig_new_instance_method(_Box2D.b2ChainShape___get_vertices)
+
+    def __repr__(self):
+        return "b2ChainShape(vertices: %s)" % (self.vertices)
+
+    def getChildEdge(self, index):
+        if childIndex >= self.childCount:
+            raise ValueError('Child index should be at most childCount=%d' % self.childCount)
+
+        edge=b2EdgeShape()
+        self.__GetChildEdge(edge, index)
+        return edge
+
+    def CreateLoop(self, values):
+        self.__set_vertices(values)
+
+    def CreateChain(self, values):
+        self.__set_vertices(values, False)
+
+    @property
+    def edges(self):
+        return [self.getChildEdge(i) for i in range(self.childCount)]
+
+    @property
+    def vertexCount(self):
+        return self.__get_count()
+
+    def __get_vertices(self):
+        """Returns all of the vertices as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]"""
+        return [ (self.__get_vertex(i).x, self.__get_vertex(i).y )
+                         for i in range(0, self.vertexCount)]
+
+    def __iter__(self):
+        """
+        Iterates over the vertices in the Chain
+        """
+        for v in self.vertices:
+            yield v
+
+    def __set_vertices(self, values, loop=True):
+        if not values or not isinstance(values, (list, tuple)) or (len(values) < 2):
+            raise ValueError('Expected tuple or list of length >= 2.')
+
+        for i,value in enumerate(values):
+            if isinstance(value, (tuple, list)):
+                if len(value) != 2:
+                    raise ValueError('Expected tuple or list of length 2, got length %d' % len(value))
+                for j in value:
+                     if not isinstance(j, (int, float)):
+                        raise ValueError('Expected int or float values, got %s' % (type(j)))
+            elif isinstance(value, b2Vec2):
+                pass
+            else:
+                raise ValueError('Expected tuple, list, or b2Vec2, got %s' % type(value))
+
+        vecs=_b2Vec2Array(len(values))
+        for i, value in enumerate(values):
+            if isinstance(value, b2Vec2):
+                vecs[i]=value
+            else:
+                vecs[i]=b2Vec2(value)
+
+        self.__create(vecs, len(values), loop)
+
+    vertices = property(__get_vertices, __set_vertices)
+    vertices_chain = property(__get_vertices, lambda self, v : self.__set_vertices(v, loop=False))
+    vertices_loop = vertices
+
+    __create = _swig_new_instance_method(_Box2D.b2ChainShape___create)
+    __get_vertex = _swig_new_instance_method(_Box2D.b2ChainShape___get_vertex)
+    __get_count = _swig_new_instance_method(_Box2D.b2ChainShape___get_count)
+
+# Register b2ChainShape in _Box2D:
+_Box2D.b2ChainShape_swigregister(b2ChainShape)
+
+class b2PolygonShape(b2Shape):
+    r"""A convex polygon. It is assumed that the interior of the polygon is to the left of each edge. Polygons have a maximum number of vertices equal to b2_maxPolygonVertices. In most cases you should not need many vertices for a convex polygon."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+
+    def __init__(self, **kwargs):
+        _Box2D.b2PolygonShape_swiginit(self,_Box2D.new_b2PolygonShape())
+        _init_kwargs(self, **kwargs)
+
+
+    Validate = _swig_new_instance_method(_Box2D.b2PolygonShape_Validate)
+    SetCentroid = _swig_new_instance_method(_Box2D.b2PolygonShape_SetCentroid)
+    SetAsBox = _swig_new_instance_method(_Box2D.b2PolygonShape_SetAsBox)
+    centroid = property(_Box2D.b2PolygonShape_centroid_get, _Box2D.b2PolygonShape_centroid_set, doc=r"""centroid : b2Vec2""")
+    vertexCount = property(_Box2D.b2PolygonShape_vertexCount_get, _Box2D.b2PolygonShape_vertexCount_set, doc=r"""vertexCount : int32""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2PolygonShape___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+    __get_vertices = _swig_new_instance_method(_Box2D.b2PolygonShape___get_vertices)
+    __get_normals = _swig_new_instance_method(_Box2D.b2PolygonShape___get_normals)
+
+    def __repr__(self):
+        return "b2PolygonShape(vertices: %s)" % (self.vertices)
+    def __clear_vertices(self):
+        self.vertexCount=0
+        for i in range(0, b2_maxPolygonVertices):
+            self.set_vertex(i, 0, 0)
+    def __set_vertices(self, values):
+        if not values:
+            self.__clear_vertices()
+        else:
+            if len(values) < 2 or len(values) > b2_maxPolygonVertices:
+                raise ValueError('Expected tuple or list of length >= 2 and less than b2_maxPolygonVertices=%d, got length %d.' %
+                                     (b2_maxPolygonVertices, len(values)))
+            for i,value in enumerate(values):
+                if isinstance(value, (tuple, list, b2Vec2)):
+                    if len(value) != 2:
+                        raise ValueError('Expected tuple or list of length 2, got length %d' % len(value))
+                    self.set_vertex(i, *value)
+                else:
+                    raise ValueError('Expected tuple, list, or b2Vec2, got %s' % type(value))
+                self.vertexCount=i+1 # follow along in case of an exception to indicate valid number set
+
+            self.__set_vertices_internal() # calculates normals, centroid, etc.
+
+    def __iter__(self):
+        """
+        Iterates over the vertices in the polygon
+        """
+        for v in self.vertices:
+            yield v
+
+    def __IsValid(self):
+        return b2CheckPolygon(self)
+
+    valid = property(__IsValid, None, doc="Checks the polygon to see if it can be properly created. Raises ValueError for invalid shapes.")
+    vertices = property(__get_vertices, __set_vertices, doc="All of the vertices as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]")
+    normals = property(__get_normals, None, doc="All of the normals as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]")
+    box = property(None, lambda self, value: self.SetAsBox(*value), doc="Property replacement for running SetAsBox (Write-only)")
+
+    __get_vertex = _swig_new_instance_method(_Box2D.b2PolygonShape___get_vertex)
+    __get_normal = _swig_new_instance_method(_Box2D.b2PolygonShape___get_normal)
+    set_vertex = _swig_new_instance_method(_Box2D.b2PolygonShape_set_vertex)
+    __set_vertices_internal = _swig_new_instance_method(_Box2D.b2PolygonShape___set_vertices_internal)
+    __swig_destroy__ = _Box2D.delete_b2PolygonShape
+
+# Register b2PolygonShape in _Box2D:
+_Box2D.b2PolygonShape_swigregister(b2PolygonShape)
+
+b2_nullNode = _Box2D.b2_nullNode
+
+class b2TreeNode(object):
+    r"""Proxy of C++ b2TreeNode class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    IsLeaf = _swig_new_instance_method(_Box2D.b2TreeNode_IsLeaf)
+    aabb = property(_Box2D.b2TreeNode_aabb_get, _Box2D.b2TreeNode_aabb_set, doc=r"""aabb : b2AABB""")
+    child1 = property(_Box2D.b2TreeNode_child1_get, _Box2D.b2TreeNode_child1_set, doc=r"""child1 : int32""")
+    child2 = property(_Box2D.b2TreeNode_child2_get, _Box2D.b2TreeNode_child2_set, doc=r"""child2 : int32""")
+    height = property(_Box2D.b2TreeNode_height_get, _Box2D.b2TreeNode_height_set, doc=r"""height : int32""")
+
+    def __init__(self):
+        r"""__init__(b2TreeNode self) -> b2TreeNode"""
+        _Box2D.b2TreeNode_swiginit(self, _Box2D.new_b2TreeNode())
+    __swig_destroy__ = _Box2D.delete_b2TreeNode
+
+# Register b2TreeNode in _Box2D:
+_Box2D.b2TreeNode_swigregister(b2TreeNode)
+
+class b2Pair(object):
+    r"""Proxy of C++ b2Pair class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    proxyIdA = property(_Box2D.b2Pair_proxyIdA_get, _Box2D.b2Pair_proxyIdA_set, doc=r"""proxyIdA : int32""")
+    proxyIdB = property(_Box2D.b2Pair_proxyIdB_get, _Box2D.b2Pair_proxyIdB_set, doc=r"""proxyIdB : int32""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2Pair___hash__)
 
     def __repr__(self):
         return _format_repr(self) 
 
 
     def __init__(self, **kwargs):
-        if self.__class__ == b2QueryCallback:
-            _self = None
-        else:
-            _self = self
-        _Box2D.b2QueryCallback_swiginit(self,_Box2D.new_b2QueryCallback(_self, ))
+        _Box2D.b2Pair_swiginit(self,_Box2D.new_b2Pair())
         _init_kwargs(self, **kwargs)
 
 
-    def __disown__(self):
-        self.this.disown()
-        _Box2D.disown_b2QueryCallback(self)
-        return weakref.proxy(self)
+    __swig_destroy__ = _Box2D.delete_b2Pair
 
-# Register b2QueryCallback in _Box2D:
-_Box2D.b2QueryCallback_swigregister(b2QueryCallback)
+# Register b2Pair in _Box2D:
+_Box2D.b2Pair_swigregister(b2Pair)
 
-class b2RayCastCallback(object):
-    r"""Callback class for ray casts. See  b2World::RayCast"""
+class b2BroadPhase(object):
+    r"""The broad-phase is used for computing pairs and performing volume queries and ray casts. This broad-phase does not persist pairs. Instead, this reports potentially new pairs. It is up to the client to consume the new pairs and to track subsequent overlap."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
-    __swig_destroy__ = _Box2D.delete_b2RayCastCallback
-    ReportFixture = _swig_new_instance_method(_Box2D.b2RayCastCallback_ReportFixture)
-    ReportParticle = _swig_new_instance_method(_Box2D.b2RayCastCallback_ReportParticle)
-    ShouldQueryParticleSystem = _swig_new_instance_method(_Box2D.b2RayCastCallback_ShouldQueryParticleSystem)
+    e_nullProxy = _Box2D.b2BroadPhase_e_nullProxy
+    
+
+    def __init__(self):
+        r"""
+        __init__(b2BroadPhase self) -> b2BroadPhase
+        The broad-phase is used for computing pairs and performing volume queries and ray casts. This broad-phase does not persist pairs. Instead, this reports potentially new pairs. It is up to the client to consume the new pairs and to track subsequent overlap.
+        """
+        _Box2D.b2BroadPhase_swiginit(self, _Box2D.new_b2BroadPhase())
+    __swig_destroy__ = _Box2D.delete_b2BroadPhase
+    MoveProxy = _swig_new_instance_method(_Box2D.b2BroadPhase_MoveProxy)
+    TouchProxy = _swig_new_instance_method(_Box2D.b2BroadPhase_TouchProxy)
+    GetFatAABB = _swig_new_instance_method(_Box2D.b2BroadPhase_GetFatAABB)
+    TestOverlap = _swig_new_instance_method(_Box2D.b2BroadPhase_TestOverlap)
+    __GetProxyCount = _swig_new_instance_method(_Box2D.b2BroadPhase___GetProxyCount)
+    __GetTreeHeight = _swig_new_instance_method(_Box2D.b2BroadPhase___GetTreeHeight)
+    __GetTreeBalance = _swig_new_instance_method(_Box2D.b2BroadPhase___GetTreeBalance)
+    __GetTreeQuality = _swig_new_instance_method(_Box2D.b2BroadPhase___GetTreeQuality)
+    ShiftOrigin = _swig_new_instance_method(_Box2D.b2BroadPhase_ShiftOrigin)
 
     __dir__ = _dir_filter
 
-    __hash__ = _swig_new_instance_method(_Box2D.b2RayCastCallback___hash__)
+    __hash__ = _swig_new_instance_method(_Box2D.b2BroadPhase___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    proxyCount=property(__GetProxyCount, None)
+    treeHeight=property(__GetTreeHeight, None)
+    treeBalance=property(__GetTreeBalance, None)
+    treeQuality=property(__GetTreeQuality, None)
+
+
+# Register b2BroadPhase in _Box2D:
+_Box2D.b2BroadPhase_swigregister(b2BroadPhase)
+
+b2PairLessThan = _Box2D.b2PairLessThan
+class b2DistanceProxy(object):
+    r"""A distance proxy is used by the GJK algorithm. It encapsulates any shape."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+
+    def __init__(self, shape, index=0):
+        _Box2D.b2DistanceProxy_swiginit(self,_Box2D.new_b2DistanceProxy())
+        self.Set(shape, index)
+
+
+    Set = _swig_new_instance_method(_Box2D.b2DistanceProxy_Set)
+    GetSupport = _swig_new_instance_method(_Box2D.b2DistanceProxy_GetSupport)
+    GetSupportVertex = _swig_new_instance_method(_Box2D.b2DistanceProxy_GetSupportVertex)
+    __get_vertex_count = _swig_new_instance_method(_Box2D.b2DistanceProxy___get_vertex_count)
+    __get_vertex = _swig_new_instance_method(_Box2D.b2DistanceProxy___get_vertex)
+    m_buffer = property(_Box2D.b2DistanceProxy_m_buffer_get, _Box2D.b2DistanceProxy_m_buffer_set, doc=r"""m_buffer : a(2).b2Vec2""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2DistanceProxy___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __get_vertices(self):
+        """Returns all of the vertices as a list of tuples [ (x1,y1), (x2,y2) ... (xN,yN) ]"""
+        return [ (self.__get_vertex(i).x, self.__get_vertex(i).y )
+                         for i in range(0, self.__get_vertex_count())]
+    vertices = property(__get_vertices, None)
+
+    __swig_destroy__ = _Box2D.delete_b2DistanceProxy
+
+# Register b2DistanceProxy in _Box2D:
+_Box2D.b2DistanceProxy_swigregister(b2DistanceProxy)
+
+class b2DistanceInput(object):
+    r"""Input for b2Distance. You have to option to use the shape radii in the computation. Even"""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    proxyA = property(_Box2D.b2DistanceInput_proxyA_get, _Box2D.b2DistanceInput_proxyA_set, doc=r"""proxyA : b2DistanceProxy""")
+    proxyB = property(_Box2D.b2DistanceInput_proxyB_get, _Box2D.b2DistanceInput_proxyB_set, doc=r"""proxyB : b2DistanceProxy""")
+    transformA = property(_Box2D.b2DistanceInput_transformA_get, _Box2D.b2DistanceInput_transformA_set, doc=r"""transformA : b2Transform""")
+    transformB = property(_Box2D.b2DistanceInput_transformB_get, _Box2D.b2DistanceInput_transformB_set, doc=r"""transformB : b2Transform""")
+    useRadii = property(_Box2D.b2DistanceInput_useRadii_get, _Box2D.b2DistanceInput_useRadii_set, doc=r"""useRadii : bool""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2DistanceInput___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self, **kwargs):
+        _Box2D.b2DistanceInput_swiginit(self,_Box2D.new_b2DistanceInput())
+        _init_kwargs(self, **kwargs)
+
+
+    __swig_destroy__ = _Box2D.delete_b2DistanceInput
+
+# Register b2DistanceInput in _Box2D:
+_Box2D.b2DistanceInput_swigregister(b2DistanceInput)
+
+class b2DistanceOutput(object):
+    r"""Output for b2Distance."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    pointA = property(_Box2D.b2DistanceOutput_pointA_get, _Box2D.b2DistanceOutput_pointA_set, doc=r"""pointA : b2Vec2""")
+    pointB = property(_Box2D.b2DistanceOutput_pointB_get, _Box2D.b2DistanceOutput_pointB_set, doc=r"""pointB : b2Vec2""")
+    distance = property(_Box2D.b2DistanceOutput_distance_get, _Box2D.b2DistanceOutput_distance_set, doc=r"""distance : float32""")
+    iterations = property(_Box2D.b2DistanceOutput_iterations_get, _Box2D.b2DistanceOutput_iterations_set, doc=r"""iterations : int32""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2DistanceOutput___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self, **kwargs):
+        _Box2D.b2DistanceOutput_swiginit(self,_Box2D.new_b2DistanceOutput())
+        _init_kwargs(self, **kwargs)
+
+
+    __swig_destroy__ = _Box2D.delete_b2DistanceOutput
+
+# Register b2DistanceOutput in _Box2D:
+_Box2D.b2DistanceOutput_swigregister(b2DistanceOutput)
+
+class b2TOIInput(object):
+    r"""Input parameters for b2TimeOfImpact."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    proxyA = property(_Box2D.b2TOIInput_proxyA_get, _Box2D.b2TOIInput_proxyA_set, doc=r"""proxyA : b2DistanceProxy""")
+    proxyB = property(_Box2D.b2TOIInput_proxyB_get, _Box2D.b2TOIInput_proxyB_set, doc=r"""proxyB : b2DistanceProxy""")
+    sweepA = property(_Box2D.b2TOIInput_sweepA_get, _Box2D.b2TOIInput_sweepA_set, doc=r"""sweepA : b2Sweep""")
+    sweepB = property(_Box2D.b2TOIInput_sweepB_get, _Box2D.b2TOIInput_sweepB_set, doc=r"""sweepB : b2Sweep""")
+    tMax = property(_Box2D.b2TOIInput_tMax_get, _Box2D.b2TOIInput_tMax_set, doc=r"""tMax : float32""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2TOIInput___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self, **kwargs):
+        _Box2D.b2TOIInput_swiginit(self,_Box2D.new_b2TOIInput())
+        _init_kwargs(self, **kwargs)
+
+
+    __swig_destroy__ = _Box2D.delete_b2TOIInput
+
+# Register b2TOIInput in _Box2D:
+_Box2D.b2TOIInput_swigregister(b2TOIInput)
+
+class b2TOIOutput(object):
+    r"""Proxy of C++ b2TOIOutput class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    e_unknown = _Box2D.b2TOIOutput_e_unknown
+    
+    e_failed = _Box2D.b2TOIOutput_e_failed
+    
+    e_overlapped = _Box2D.b2TOIOutput_e_overlapped
+    
+    e_touching = _Box2D.b2TOIOutput_e_touching
+    
+    e_separated = _Box2D.b2TOIOutput_e_separated
+    
+    state = property(_Box2D.b2TOIOutput_state_get, _Box2D.b2TOIOutput_state_set, doc=r"""state : b2TOIOutput::State""")
+    t = property(_Box2D.b2TOIOutput_t_get, _Box2D.b2TOIOutput_t_set, doc=r"""t : float32""")
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2TOIOutput___hash__)
 
     def __repr__(self):
         return _format_repr(self) 
 
 
     def __init__(self):
-        r"""
-        __init__(b2RayCastCallback self) -> b2RayCastCallback
-        Callback class for ray casts. See  b2World::RayCast
-        """
-        if self.__class__ == b2RayCastCallback:
-            _self = None
-        else:
-            _self = self
-        _Box2D.b2RayCastCallback_swiginit(self, _Box2D.new_b2RayCastCallback(_self, ))
-    def __disown__(self):
-        self.this.disown()
-        _Box2D.disown_b2RayCastCallback(self)
-        return weakref.proxy(self)
+        r"""__init__(b2TOIOutput self) -> b2TOIOutput"""
+        _Box2D.b2TOIOutput_swiginit(self, _Box2D.new_b2TOIOutput())
+    __swig_destroy__ = _Box2D.delete_b2TOIOutput
 
-# Register b2RayCastCallback in _Box2D:
-_Box2D.b2RayCastCallback_swigregister(b2RayCastCallback)
+# Register b2TOIOutput in _Box2D:
+_Box2D.b2TOIOutput_swigregister(b2TOIOutput)
 
 class b2ContactManager(object):
     r"""Proxy of C++ b2ContactManager class."""

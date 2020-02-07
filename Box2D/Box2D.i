@@ -131,6 +131,8 @@
     %feature("director") b2Draw;
     %feature("director") b2DrawExtended;
     %feature("director") b2QueryCallback;
+    %feature("director") b2FixtureParticleQueryCallback;
+    %feature("director") b2ParticlesInShapeQueryCallback;
     %feature("director") b2RayCastCallback;
 
     /* ---- includes ---- */
