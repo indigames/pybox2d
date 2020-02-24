@@ -1,4 +1,19 @@
+cmake_minimum_required(VERSION 2.8.12)
+
+project(Box2D)
+
 set (CMAKE_CXX_STANDARD 14)
+
+set (PYTHON_INCLUDE_DIRS "igeLibs/Python/Include")
+if (MSVC)
+    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/PC")
+elseif (OSX)
+    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/Mac")
+elseif (ANDROID)
+    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/Android")
+elseif (IOS)
+    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/IOS")
+endif ()
 
 file(GLOB SRC
     "Box2D/*.h"
@@ -31,9 +46,7 @@ endif()
 
 add_definitions(-DLIQUIDFUN_EXTERNAL_LANGUAGE_API=1 -D_LIBCPP_ENABLE_CXX17_REMOVED_FEATURES)
 
-add_library(_Box2D STATIC ${SRC}) 
+add_library(Box2D STATIC ${SRC})
 
-target_include_directories(_Box2D PRIVATE 
-.
-${PYTHON_INCLUDE_DIRS}
+target_include_directories(Box2D PRIVATE . ${PYTHON_INCLUDE_DIRS}
 )
