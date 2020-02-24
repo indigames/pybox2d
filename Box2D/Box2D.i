@@ -35,7 +35,7 @@
 #ifdef SWIGPYTHON
     /* To disable assertions->exceptions, comment out the two lines that define
         USE_EXCEPTIONS. One is here, one is in Common/b2Settings.h  */
-    #define USE_EXCEPTIONS
+    // #define USE_EXCEPTIONS
     #ifdef USE_EXCEPTIONS
         /* See Common/b2Settings.h also. It defines b2Assert to instead throw
         an exception if USE_EXCEPTIONS is defined. */
@@ -53,50 +53,51 @@
                 SWIG_fail;
             }
         }
+    
+
+        /* Director-exceptions are a result of callbacks that happen as a result to
+           the physics step or debug draw, usually. So, catch those errors and report
+           them back to Python. 
+           
+           Example: 
+           If there is a typo in your b2Draw instance's DrawPolygon (in
+           Python), when you call world.DrawDebugData(), callbacks will be made
+           to such functions as that. Being Python code called from the C++ module, 
+           they turn into director exceptions then and will crash the application
+           unless handled in C++ (try/catch) and then passed to Python (SWIG_fail).
+           */
+        %exception b2World::Step {
+            try { $action }
+            catch (Swig::DirectorException) { SWIG_fail; }
+            catch (b2AssertException) { SWIG_fail; }
+        }
+        %exception b2World::DrawDebugData {
+            try { $action }
+            catch (Swig::DirectorException) { SWIG_fail; }
+            catch (b2AssertException) { SWIG_fail; }
+        }
+        %exception b2World::QueryAABB {
+            try { $action }
+            catch (Swig::DirectorException) { SWIG_fail; }
+            catch (b2AssertException) { SWIG_fail; }
+        }
+        %exception b2World::RayCast {
+            try { $action }
+            catch (Swig::DirectorException) { SWIG_fail; }
+            catch (b2AssertException) { SWIG_fail; }
+        }
+        %exception b2World::DestroyJoint {
+            try { $action }
+            catch (Swig::DirectorException) { SWIG_fail; }
+            catch (b2AssertException) { SWIG_fail; }
+        }
+        %exception b2World::DestroyBody {
+            try { $action }
+            catch (Swig::DirectorException) { SWIG_fail; }
+            catch (b2AssertException) { SWIG_fail; }
+        }
     #endif
-
-    /* Director-exceptions are a result of callbacks that happen as a result to
-       the physics step or debug draw, usually. So, catch those errors and report
-       them back to Python. 
-       
-       Example: 
-       If there is a typo in your b2Draw instance's DrawPolygon (in
-       Python), when you call world.DrawDebugData(), callbacks will be made
-       to such functions as that. Being Python code called from the C++ module, 
-       they turn into director exceptions then and will crash the application
-       unless handled in C++ (try/catch) and then passed to Python (SWIG_fail).
-       */
-    %exception b2World::Step {
-        try { $action }
-        catch (Swig::DirectorException) { SWIG_fail; }
-        catch (b2AssertException) { SWIG_fail; }
-    }
-    %exception b2World::DrawDebugData {
-        try { $action }
-        catch (Swig::DirectorException) { SWIG_fail; }
-        catch (b2AssertException) { SWIG_fail; }
-    }
-    %exception b2World::QueryAABB {
-        try { $action }
-        catch (Swig::DirectorException) { SWIG_fail; }
-        catch (b2AssertException) { SWIG_fail; }
-    }
-    %exception b2World::RayCast {
-        try { $action }
-        catch (Swig::DirectorException) { SWIG_fail; }
-        catch (b2AssertException) { SWIG_fail; }
-    }
-    %exception b2World::DestroyJoint {
-        try { $action }
-        catch (Swig::DirectorException) { SWIG_fail; }
-        catch (b2AssertException) { SWIG_fail; }
-    }
-    %exception b2World::DestroyBody {
-        try { $action }
-        catch (Swig::DirectorException) { SWIG_fail; }
-        catch (b2AssertException) { SWIG_fail; }
-    }
-
+    
     #pragma SWIG nowarn=314
 
     /* ---- classes to ignore ---- */

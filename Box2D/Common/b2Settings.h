@@ -25,13 +25,15 @@
 #include <float.h>
 
 #define B2_NOT_USED(x) ((void)(x))
-#define USE_EXCEPTIONS
 #define B2_USE_16_BIT_PARTICLE_INDICES
 
 // Try enable NEON on arm7
 // #if defined(__ARM_NEON__) && !defined(__aarch64__)
     // #define LIQUIDFUN_SIMD_NEON
 // #endif
+
+// [IGE]: USE_EXCEPTIONS must be in sync with defined in Box2D.i for Python module
+// #define USE_EXCEPTIONS
 
 #ifdef USE_EXCEPTIONS
 #include <Python.h>
@@ -40,11 +42,11 @@ class b2AssertException {};
 #define b2Assert(A) if (!(A)) { PyErr_SetString(PyExc_AssertionError, #A); throw b2AssertException(); }
 #else
 	#if DEBUG && !defined(NDEBUG)
-	#define b2Assert(A) assert(A)
-	#define B2_ASSERT_ENABLED 1
+        #define b2Assert(A) assert(A)
+        #define B2_ASSERT_ENABLED 1
 	#else
-	#define b2Assert(A)
-	#define B2_ASSERT_ENABLED 0
+        #define b2Assert(A)
+        #define B2_ASSERT_ENABLED 0
 	#endif
 #endif
 
