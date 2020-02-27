@@ -50,12 +50,11 @@ if not exist %OUTPUT_DIR% (
     mkdir %OUTPUT_DIR%
 )
 
-echo Cleaning up...
-    if exist %BUILD_DIR% (
-        rmdir /s /q %BUILD_DIR%
-    )
+if not exist %BUILD_DIR% (
     mkdir %BUILD_DIR%
-    
+)
+
+echo Cleaning up...
     if exist %OUTPUT_LIBS_DEBUG% (
         rmdir /s /q %OUTPUT_LIBS_DEBUG%
     )
@@ -193,4 +192,4 @@ goto ALL_DONE
 
 :ALL_DONE
 	cd %PROJECT_DIR%
-	echo COMPILING PC DONE!
+	echo COMPILING DONE!
