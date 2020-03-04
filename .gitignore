@@ -11,3 +11,4 @@ library/Box2D.egg-info/top_level.txt
 library/Box2D.egg-info/SOURCES.txt
 Box2D/Box2D_wrap.cpp
 Box2D/Box2D_wrap.h
+/igeLibs
