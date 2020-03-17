@@ -26,44 +26,48 @@ endif()
 
 set (CMAKE_CXX_STANDARD 14)
 
-set (PYTHON_INCLUDE_DIRS "igeLibs/Python/Include")
+if (NOT DEFINED IGE_ROOT)
+    set(IGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
+
+set (PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Include")
 if (MSVC)
-    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/PC")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/PC")
 elseif (OSX)
-    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/Mac")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Mac")
 elseif (ANDROID)
-    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/Android")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/Android")
 elseif (IOS)
-    list(APPEND PYTHON_INCLUDE_DIRS "igeLibs/Python/IOS")
+    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_ROOT}/igeLibs/Python/IOS")
 endif ()
 
 file(GLOB SRC
-    "Box2D/*.h"
-    "Box2D/*.cpp"
-    "Box2D/Collision/*.h"
-    "Box2D/Collision/*.cpp"
-    "Box2D/Collision/Shapes/*.h"
-    "Box2D/Collision/Shapes/*.cpp"
-    "Box2D/Common/*.h"
-    "Box2D/Common/*.cpp"
-    "Box2D/Dynamics/*.h"
-    "Box2D/Dynamics/*.cpp"
-    "Box2D/Dynamics/Contacts/*.h"
-    "Box2D/Dynamics/Contacts/*.cpp"
-    "Box2D/Dynamics/Joints/*.h"
-    "Box2D/Dynamics/Joints/*.cpp"
-    "Box2D/Particle/*.h"
-    "Box2D/Particle/*.cpp"
-    "Box2D/Rope/*.h"
-    "Box2D/Rope/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Collision/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Collision/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Collision/Shapes/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Collision/Shapes/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Common/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Common/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Dynamics/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Dynamics/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Dynamics/Contacts/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Dynamics/Contacts/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Dynamics/Joints/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Dynamics/Joints/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Particle/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Particle/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Rope/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Rope/*.cpp"
 )
 
 if(ANDROID_ABI STREQUAL "armeabi-v7a")
   enable_language(ASM)
   set(SRC ${SRC}
-      "Box2D/Particle/b2ParticleAssembly.neon.s"
+      "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Particle/b2ParticleAssembly.neon.s"
   )
-  set_source_files_properties(Box2D/Particle/b2ParticleAssembly.neon.s PROPERTIES COMPILE_FLAGS "${CMAKE_ASM_FLAGS} ${CMAKE_CXX_FLAGS} -x assembler-with-cpp")
+  set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/Box2D/Particle/b2ParticleAssembly.neon.s PROPERTIES COMPILE_FLAGS "${CMAKE_ASM_FLAGS} ${CMAKE_CXX_FLAGS} -x assembler-with-cpp")
 endif()
 
 add_definitions(-DLIQUIDFUN_EXTERNAL_LANGUAGE_API=1 -D_LIBCPP_ENABLE_CXX17_REMOVED_FEATURES)
