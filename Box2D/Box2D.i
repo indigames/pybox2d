@@ -35,7 +35,7 @@
 #ifdef SWIGPYTHON
     /* To disable assertions->exceptions, comment out the two lines that define
         USE_EXCEPTIONS. One is here, one is in Common/b2Settings.h  */
-    // #define USE_EXCEPTIONS
+    #define USE_EXCEPTIONS
     #ifdef USE_EXCEPTIONS
         /* See Common/b2Settings.h also. It defines b2Assert to instead throw
         an exception if USE_EXCEPTIONS is defined. */

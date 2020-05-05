@@ -547,6 +547,28 @@ def b2TimeOfImpact(shapeA=None, idxA=0, shapeB=None, idxB=0, sweepA=None, sweepB
 
 B2_ASSERT_ENABLED = _Box2D.B2_ASSERT_ENABLED
 
+class b2AssertException(object):
+    r"""Proxy of C++ b2AssertException class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    __dir__ = _dir_filter
+
+    __hash__ = _swig_new_instance_method(_Box2D.b2AssertException___hash__)
+
+    def __repr__(self):
+        return _format_repr(self) 
+
+
+    def __init__(self):
+        r"""__init__(b2AssertException self) -> b2AssertException"""
+        _Box2D.b2AssertException_swiginit(self, _Box2D.new_b2AssertException())
+    __swig_destroy__ = _Box2D.delete_b2AssertException
+
+# Register b2AssertException in _Box2D:
+_Box2D.b2AssertException_swigregister(b2AssertException)
+
 b2_pi = _Box2D.b2_pi
 
 LIQUIDFUN_EXTERNAL_LANGUAGE_API = _Box2D.LIQUIDFUN_EXTERNAL_LANGUAGE_API

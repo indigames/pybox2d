@@ -33,7 +33,7 @@
 // #endif
 
 // [IGE]: USE_EXCEPTIONS must be in sync with defined in Box2D.i for Python module
-// #define USE_EXCEPTIONS
+#define USE_EXCEPTIONS
 
 #ifdef USE_EXCEPTIONS
 #include <Python.h>
