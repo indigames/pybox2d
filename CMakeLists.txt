@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
-file(TO_CMAKE_PATH $ENV{IGE_LIBS} IGE_LIBS)
-
 project(Box2D)
+set (CMAKE_CXX_STANDARD 14)
 
 # [IGE]: tweaks for platforms
 if(DEFINED ANDROID_PLATFORM)
@@ -30,18 +29,14 @@ elseif(IOS)
 endif()
 # [/IGE]
 
-set (CMAKE_CXX_STANDARD 14)
+# [IGE]: try include conan build config
+if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    conan_basic_setup()
+endif()
+# [/IGE]
 
-set (PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Include")
-if (MSVC)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/PC")
-elseif (OSX)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Mac")
-elseif (ANDROID)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/Android")
-elseif (IOS)
-    list(APPEND PYTHON_INCLUDE_DIRS "${IGE_LIBS}/Python/IOS")
-endif ()
+set(PYTHON_INCLUDE_DIRS "${CONAN_INCLUDE_DIRS}")
 
 file(GLOB SRC
     "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/*.h"

@@ -12,3 +12,6 @@ library/Box2D.egg-info/SOURCES.txt
 Box2D/Box2D_wrap.cpp
 Box2D/Box2D_wrap.h
 /igeLibs
+/_ige_build
+/_ige_release
+/conanfile.py
