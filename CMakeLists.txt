@@ -1,9 +1,15 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.15.0)
 
-project(Box2D)
+set(TARGET_NAME Box2D)
+project(${TARGET_NAME})
 set (CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-# [IGE]: tweaks for platforms
+# Modules and install path (required by conan)
+set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install)
+set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
+set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR} ${CMAKE_PREFIX_PATH})
+
 if(DEFINED ANDROID_PLATFORM)
     set (ANDROID 1)
     if(ANDROID_ABI STREQUAL "armeabi-v7a")
@@ -29,14 +35,15 @@ elseif(IOS)
 endif()
 # [/IGE]
 
-# [IGE]: try include conan build config
-if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    conan_basic_setup()
+if(${APP_STYLE} MATCHES "SHARED")
+    find_package (Python3 ${PYTHON_VERSION} EXACT REQUIRED COMPONENTS Development)
+else()
+    find_package(Python REQUIRED)
+    set (Python3_INCLUDE_DIRS ${Python_INCLUDE_DIRS})
+    set (Python3_LIBRARIES ${Python_LIBRARIES})
 endif()
-# [/IGE]
 
-set(PYTHON_INCLUDE_DIRS "${CONAN_INCLUDE_DIRS}")
+set(PYTHON_INCLUDE_DIRS ${Python3_INCLUDE_DIRS})
 
 file(GLOB SRC
     "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/*.h"
@@ -69,7 +76,23 @@ endif()
 
 add_definitions(-DLIQUIDFUN_EXTERNAL_LANGUAGE_API=1 -D_LIBCPP_ENABLE_CXX17_REMOVED_FEATURES)
 
-add_library(Box2D STATIC ${SRC})
+add_library(${TARGET_NAME} STATIC ${SRC})
 
-target_include_directories(Box2D PRIVATE . ${PYTHON_INCLUDE_DIRS}
+target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${PYTHON_INCLUDE_DIRS}
 )
+
+# Install Targets
+install(TARGETS
+    ${TARGET_NAME}
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    PUBLIC_HEADER DESTINATION include
+)
+
+file(GLOB_RECURSE PUBLIC_INCLUDE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/*.h*")
+foreach(HEADER ${PUBLIC_INCLUDE_FILES})
+    file(RELATIVE_PATH HEADER_RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/" "${HEADER}")
+    get_filename_component(DIR ${HEADER_RELATIVE} DIRECTORY)
+    install(FILES ${HEADER} DESTINATION include/${DIR})
+endforeach()
